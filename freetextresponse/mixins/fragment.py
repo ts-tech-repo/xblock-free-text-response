@@ -5,6 +5,7 @@ Note: We should resume test coverage for all lines in this file once
 split into its own library.
 """
 from __future__ import absolute_import
+import pkg_resources
 
 from xblock.core import XBlock
 from xblock.fragment import Fragment
@@ -78,10 +79,12 @@ class XBlockFragmentBuilderMixin(object):
         for item in css:
             if item.startswith('/'):
                 url = item
+                fragment.add_css_url(url)
             else:
-                item = 'public/' + item
-                url = self.runtime.local_resource_url(self, item)
-            fragment.add_css_url(url)
+                item = '../public/' + item
+                data = pkg_resources.resource_string(__name__, item)
+                data = data.decode('utf8')
+                fragment.add_css(data)
         for item in js:
             item = 'public/' + item
             url = self.runtime.local_resource_url(self, item)
