@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.1.0
+* Removed support of Django < 2.2 versions
+* Added support for python 3.8
+
 ## Version 1.0.0
 * Pull translations from new tx acct
 * Modernize XBlock infrastructure

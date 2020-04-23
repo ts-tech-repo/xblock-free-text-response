@@ -1,34 +1,32 @@
 addons:
   apt:
     packages:
-    - nodejs
+      - nodejs
 language: python
 python:
   - 3.5
+  - 3.8
 sudo: false
 env:
+  - TOXENV=django22
   - TOXENV=eslint
   - TOXENV=pylint
   - TOXENV=csslint
   - TOXENV=pycodestyle
-  - TOXENV=django111
-  - TOXENV=django20
-  - TOXENV=django21
-  - TOXENV=django22
 
 before_install:
   - "pip install -U pip"
   - export BOTO_CONFIG=/dev/null
 cache:
-    directories:
-        - $HOME/.cache/pip
+  directories:
+    - $HOME/.cache/pip
 install:
   - "make requirements"
   - "pip install coveralls"
 script:
   - make test
 branches:
-    only:
-      - master
+  only:
+    - master
 after_success:
   coveralls
