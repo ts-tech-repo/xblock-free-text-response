@@ -10,9 +10,8 @@ sudo: false
 env:
   - TOXENV=django22
   - TOXENV=eslint
-  - TOXENV=pylint
+  - TOXENV=quality
   - TOXENV=csslint
-  - TOXENV=pycodestyle
 
 before_install:
   - "pip install -U pip"
