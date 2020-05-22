@@ -38,6 +38,7 @@ clean:  ## Remove build artifacts
 
 .PHONY: quality
 quality: requirements  # Run all quality checks
+	pip install -r quality.txt
 	tox -e csslint,eslint,pycodestyle,pylint
 
 .PHONY: requirements
@@ -45,7 +46,11 @@ requirements: requirements_js requirements_py  ## Install all required packages
 
 .PHONY: requirements_py
 requirements_py:  # Install required python packages
-	pip install tox==3.7.0
+	pip install -r requirements/base.txt
+
+.PHONY: requirements_travis
+requirements_travis:  requirements_js # Install travis requirements
+	pip install -r requirements/travis.txt
 
 .PHONY: requirements_js
 requirements_js:  # Install required javascript packages
@@ -60,6 +65,16 @@ $(module_root)/public/%.css: $(module_root)/public/%.less
 .PHONY: test
 test: requirements  ## Run all quality checks and unit tests
 	tox -p all
+
+upgrade: export CUSTOM_COMPILE_COMMAND=make upgrade
+upgrade: ## update the requirements/*.txt files with the latest packages satisfying requirements/*.in
+	pip install -q -r requirements/pip_tools.txt
+	pip-compile --upgrade -o requirements/pip_tools.txt requirements/pip_tools.in
+	pip-compile --upgrade -o requirements/base.txt requirements/base.in
+	pip-compile --upgrade -o requirements/test.txt requirements/test.in
+	pip-compile --upgrade -o requirements/quality.txt requirements/quality.in
+	pip-compile --upgrade -o requirements/tox.txt requirements/tox.in
+	pip-compile --upgrade -o requirements/travis.txt requirements/travis.in
 
 # extract
 %.po: $(files_with_translations)
