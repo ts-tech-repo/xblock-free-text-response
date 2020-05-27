@@ -10,9 +10,8 @@ sudo: false
 env:
   - TOXENV=django22
   - TOXENV=eslint
-  - TOXENV=pylint
+  - TOXENV=quality
   - TOXENV=csslint
-  - TOXENV=pycodestyle
 
 before_install:
   - "pip install -U pip"
@@ -21,8 +20,7 @@ cache:
   directories:
     - $HOME/.cache/pip
 install:
-  - "make requirements"
-  - "pip install coveralls"
+  - "make requirements_travis"
 script:
   - make test
 branches:

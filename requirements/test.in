@@ -1,0 +1,6 @@
+# Requirements for test runs
+
+coverage
+ddt
+edx-opaque-keys
+mock
