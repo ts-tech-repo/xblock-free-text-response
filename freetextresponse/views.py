@@ -1,8 +1,6 @@
 """
 Handle view logic for the XBlock
 """
-from __future__ import absolute_import
-
 from six import text_type
 from xblock.core import XBlock
 from xblock.validation import ValidationMessage

@@ -90,7 +90,7 @@ class FreetextResponseXblockTestCase(unittest.TestCase):
         """
         Checks classmethod _generate_validation_message
         """
-        msg = u'weight attempts cannot be negative'
+        msg = 'weight attempts cannot be negative'
         result = ValidationMessage(
             ValidationMessage.ERROR,
             _(msg)
