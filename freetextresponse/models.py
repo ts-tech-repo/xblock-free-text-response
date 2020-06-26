@@ -1,8 +1,6 @@
 """
 Handle data access logic for the XBlock
 """
-from __future__ import absolute_import
-
 from enum import Enum
 from django.db import IntegrityError
 from django.utils.translation import ugettext_lazy as _
