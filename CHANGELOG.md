@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.1.1
+* Removed support of enum34 package
+
 ## Version 1.1.0
 * Removed support of Django < 2.2 versions
 * Added support for python 3.8
