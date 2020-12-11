@@ -5,7 +5,7 @@ from os import path, walk
 from setuptools import setup
 
 
-version = '1.1.1'
+version = '1.1.2'
 description = __doc__.strip().split('\n')[0]
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.rst')) as file_in:

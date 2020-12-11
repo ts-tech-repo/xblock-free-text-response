@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.1.2
+* Activates and fix translation tooling with Travis CI checks
+* Pull the latest translations from Transifex (to date: January 21, 2021)
+
 ## Version 1.1.1
 * Removed support of enum34 package
 
