@@ -3,7 +3,7 @@ Handle data access logic for the XBlock
 """
 from enum import Enum
 from django.db import IntegrityError
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from xblock.fields import Boolean
 from xblock.fields import Float
 from xblock.fields import Integer

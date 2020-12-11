@@ -8,10 +8,11 @@ python:
   - 3.8
 sudo: false
 env:
-  - TOXENV=django22
-  - TOXENV=eslint
-  - TOXENV=quality
-  - TOXENV=csslint
+  - MAKE_TARGET=test TOXENV=django22
+  - MAKE_TARGET=test TOXENV=eslint
+  - MAKE_TARGET=test TOXENV=quality
+  - MAKE_TARGET=test TOXENV=csslint
+  - MAKE_TARGET=translations_validate
 
 before_install:
   - "pip install -U pip"
@@ -22,7 +23,7 @@ cache:
 install:
   - "make requirements_travis"
 script:
-  - make test
+  - make $MAKE_TARGET
 branches:
   only:
     - master
