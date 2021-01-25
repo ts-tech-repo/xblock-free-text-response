@@ -118,7 +118,7 @@ class FreeTextResponseViewMixin(
             result = ''
         elif self.score == 0.0:
             result = "({})".format(
-                self.ungettext(
+                self.ngettext(
                     "{weight} point possible",
                     "{weight} points possible",
                     self.weight,
@@ -131,7 +131,7 @@ class FreeTextResponseViewMixin(
             # No trailing zero and no scientific notation
             score_string = ('%.15f' % scaled_score).rstrip('0').rstrip('.')
             result = "({})".format(
-                self.ungettext(
+                self.ngettext(
                     "{score_string}/{weight} point",
                     "{score_string}/{weight} points",
                     self.weight,
@@ -149,7 +149,7 @@ class FreeTextResponseViewMixin(
         """
         result = ''
         if self.max_attempts > 0:
-            result = self.ungettext(
+            result = self.ngettext(
                 'You have used {count_attempts} of {max_attempts} submission',
                 'You have used {count_attempts} of {max_attempts} submissions',
                 self.max_attempts,
@@ -173,7 +173,7 @@ class FreeTextResponseViewMixin(
         """
         Returns the word count message
         """
-        result = self.ungettext(
+        result = self.ngettext(
             "Your response must be "
             "between {min} and {max} word.",
             "Your response must be "
@@ -269,7 +269,7 @@ class FreeTextResponseViewMixin(
                 (not self._word_count_valid())
         ):
             word_count_message = self._get_word_count_message()
-            result = self.ugettext(
+            result = self.gettext(
                 "Invalid Word Count. {word_count_message}"
             ).format(
                 word_count_message=word_count_message,
@@ -314,7 +314,7 @@ class FreeTextResponseViewMixin(
         """
         result = ValidationMessage(
             ValidationMessage.ERROR,
-            self.ugettext(text_type(text))
+            self.gettext(text_type(text))
         )
         return result
 

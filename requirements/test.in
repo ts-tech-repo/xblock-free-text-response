@@ -2,5 +2,9 @@
 
 coverage
 ddt
+django-pyfs
 edx-opaque-keys
+lazy
 mock
+xblock-sdk
+xblock-utils

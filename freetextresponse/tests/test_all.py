@@ -15,10 +15,11 @@ from xblockutils.resources import ResourceLoader
 
 from django.db import IntegrityError
 
-from .freetextresponse import Credit
-from .freetextresponse import FreeTextResponse
+from freetextresponse.models import Credit
+from freetextresponse.views import _is_at_least_one_phrase_present
+from freetextresponse.xblocks import FreeTextResponse
 
-from .utils import _
+from freetextresponse.utils import _
 
 
 class TestData(object):
@@ -195,9 +196,9 @@ class FreetextResponseXblockTestCase(unittest.TestCase):
         )
         fragment = self.xblock.build_fragment(
             template,
-            initialize_js_func='FreeTextResponseView',
-            additional_css=[],
-            additional_js=[],
+            js_init='FreeTextResponseView',
+            css=[],
+            js=[],
         )
         self.assertIn(studio_settings_prompt, fragment.content)
 
@@ -304,7 +305,7 @@ class FreetextResponseXblockTestCase(unittest.TestCase):
         answer = keyphrases_list[1]
         answer = 'ajhsdfhjaefhaf ' + answer + 'jkfbaufebn;  fuqv'
         self.assertTrue(
-            FreeTextResponse._is_at_least_one_phrase_present(
+            _is_at_least_one_phrase_present(
                 keyphrases_list,
                 answer,
             ),
@@ -326,7 +327,7 @@ class FreetextResponseXblockTestCase(unittest.TestCase):
         answer = 'so dict phrase'
         answer = 'ajhsdfhjaefhaf ' + answer + 'jkfbaufebn;  fuqv'
         self.assertFalse(
-            FreeTextResponse._is_at_least_one_phrase_present(
+            _is_at_least_one_phrase_present(
                 keyphrases_list,
                 answer,
             ),

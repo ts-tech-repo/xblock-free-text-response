@@ -1,11 +1,9 @@
 """
 Mixin i18n logic
 """
-from xblock.core import XBlock
 
 
-@XBlock.needs('i18n')
-class I18nXBlockMixin(XBlock):
+class I18nXBlockMixin(object):
     """
     Make an XBlock translation-aware
     """
@@ -17,16 +15,16 @@ class I18nXBlockMixin(XBlock):
         service = self.runtime.service(self, 'i18n')
         return service
 
-    def ugettext(self, text):
+    def gettext(self, text):
         """
-        Call ugettext from the XBlock i18n service
+        Call gettext from the XBlock i18n service
         """
-        text = self._i18n_service().ugettext(text)
+        text = self._i18n_service().gettext(text)
         return text
 
-    def ungettext(self, *args, **kwargs):
+    def ngettext(self, *args, **kwargs):
         """
-        Call ungettext from the XBlock i18n service
+        Call ngettext from the XBlock i18n service
         """
-        text = self._i18n_service().ungettext(*args, **kwargs)
+        text = self._i18n_service().ngettext(*args, **kwargs)
         return text

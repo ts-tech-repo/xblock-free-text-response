@@ -7,7 +7,7 @@ split into its own library.
 import pkg_resources
 
 from xblock.core import XBlock
-from xblock.fragment import Fragment
+from web_fragments.fragment import Fragment
 
 
 class XBlockFragmentBuilderMixin(object):
@@ -72,7 +72,7 @@ class XBlockFragmentBuilderMixin(object):
             rendered_template = self.loader.render_django_template(
                 template,
                 context=context,
-                i18n_service=self.runtime.service(self, 'i18n'),
+                i18n_service=self._i18n_service(),
             )
         fragment = Fragment(rendered_template)
         for item in css:

@@ -1,20 +1,31 @@
 ## Localization targets
 
 WORKDIR := $(module_root)
+I18N_SOURCE_DIR := $(WORKDIR)/translations/en/LC_MESSAGES
+
+translations_rename_to_textmo:  ## Renames django-partial.po to text.mo for XBlock compatibility
+	cat $(I18N_SOURCE_DIR)/django-partial.po |  \
+	   grep -v 'Plural-Forms: nplurals' > $(I18N_SOURCE_DIR)/text.po
+	rm -fv $(I18N_SOURCE_DIR)/django-partial.po
 
 translations_extract: ## extract strings to be translated, outputting .po files
 	# Extract Python and Django template strings
-	mkdir -p $(WORKDIR)/translations/en/LC_MESSAGES/
+	mkdir -p $(I18N_SOURCE_DIR)
 	tox -e translations_extract
-	# cat $(WORKDIR)/translations/en/LC_MESSAGES/django-partial.po | \
-	# 	grep -v 'Plural-Forms: nplurals' > $(WORKDIR)/translations/en/LC_MESSAGES/text.po
-	# rm -f $(WORKDIR)/translations/en/LC_MESSAGES/django-partial.po
+	make translations_rename_to_textmo
 
 translations_compile: ## compile translation files, outputting .mo files for each supported language
 	tox -e translations_compile
 
 translations_detect_changed: ## Determines if the source translation files are up-to-date, otherwise exit with a non-zero code.
-	tox -e translations_detect_changed
+	tox -e translations_detect_changed || \
+	    (  \
+	        echo "====" &&  \
+	        echo "Translations have changes. Run 'make translations_extract' locally to update them." &&  \
+	        echo "====" &&  \
+	        exit 1  \
+        )
+	make translations_rename_to_textmo
 
 translations_pull: ## pull translations from Transifex
 	tox -e translations_pull

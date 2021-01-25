@@ -18,5 +18,5 @@ class FreeTextResponse(
         XBlock,
 ):
     """
-    A fullscreen image modal XBlock.
+    XBlock to capture a free-text response.
     """
