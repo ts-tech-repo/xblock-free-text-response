@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.0.0
+* Dropped support for python 3.5
+* Fixed failures in upgrade requirements workflow execution
+
 ## Version 1.1.2
 * Activates and fix translation tooling with Travis CI checks
 * Pull the latest translations from Transifex (to date: January 21, 2021)

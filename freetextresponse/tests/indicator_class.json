@@ -14,19 +14,19 @@
     "incorrect_zero_credit": {
         "display_correctness": true,
         "word_count_valid": true, 
-        "credit": "zero", 
+        "credit": "zero",
         "result": "incorrect"
     },
     "correct_half_credit": {
         "display_correctness": true,
         "word_count_valid": true, 
-        "credit": "half", 
+        "credit": "half",
         "result": "correct"
     },
     "correct_full_credit": {
         "display_correctness": true,
         "word_count_valid": true, 
-        "credit": "full", 
+        "credit": "full",
         "result": "correct"
     }
 }

@@ -235,6 +235,6 @@ class Credit(Enum):
     An enumeration of the different types of credit a submission can be
     awareded: Zero Credit, Half Credit, and Full Credit
     """
-    zero = 0.0
-    half = 0.5
-    full = 1.0
+    zero = 0.0  # pylint: disable=invalid-name
+    half = 0.5  # pylint: disable=invalid-name
+    full = 1.0  # pylint: disable=invalid-name
