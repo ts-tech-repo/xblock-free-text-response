@@ -20,7 +20,7 @@ django-pyfs==3.0
     # via -r requirements/test.in
 django==2.2.24
     # via
-    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
+    #   -c requirements/common_constraints.txt
     #   django-pyfs
     #   xblock-sdk
 edx-opaque-keys==2.2.1
