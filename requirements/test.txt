@@ -6,9 +6,9 @@
 #
 appdirs==1.4.4
     # via fs
-boto3==1.18.17
+boto3==1.18.33
     # via fs-s3fs
-botocore==1.21.17
+botocore==1.21.33
     # via
     #   boto3
     #   s3transfer
@@ -40,7 +40,7 @@ lazy==1.4
     # via -r requirements/test.in
 lxml==4.6.3
     # via xblock
-mako==1.1.4
+mako==1.1.5
     # via xblock-utils
 markupsafe==2.0.1
     # via
@@ -65,7 +65,7 @@ pyyaml==5.4.1
     # via xblock
 s3transfer==0.5.0
     # via boto3
-simplejson==3.17.3
+simplejson==3.17.5
     # via xblock-utils
 six==1.16.0
     # via
@@ -74,7 +74,7 @@ six==1.16.0
     #   python-dateutil
 sqlparse==0.4.1
     # via django
-stevedore==3.3.0
+stevedore==3.4.0
     # via edx-opaque-keys
 urllib3==1.26.6
     # via botocore
@@ -84,7 +84,7 @@ web-fragments==1.1.0
     #   xblock-utils
 webob==1.8.7
     # via xblock
-xblock==1.5.0
+xblock==1.5.1
     # via xblock-utils
 xblock-sdk==0.3.0
     # via -r requirements/test.in

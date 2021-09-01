@@ -9,13 +9,13 @@ appdirs==1.4.4
     #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   fs
-astroid==2.6.6
+astroid==2.7.3
     # via pylint
-boto3==1.18.17
+boto3==1.18.33
     # via
     #   -r requirements/test.txt
     #   fs-s3fs
-botocore==1.21.17
+botocore==1.21.33
     # via
     #   -r requirements/test.txt
     #   boto3
@@ -62,7 +62,7 @@ lxml==4.6.3
     #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   xblock
-mako==1.1.4
+mako==1.1.5
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
@@ -81,9 +81,11 @@ pbr==5.6.0
     # via
     #   -r requirements/test.txt
     #   stevedore
+platformdirs==2.3.0
+    # via pylint
 pycodestyle==2.7.0
     # via -r requirements/quality.in
-pylint==2.9.6
+pylint==2.10.2
     # via -r requirements/quality.in
 pymongo==3.12.0
     # via
@@ -111,7 +113,7 @@ s3transfer==0.5.0
     # via
     #   -r requirements/test.txt
     #   boto3
-simplejson==3.17.3
+simplejson==3.17.5
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
@@ -128,7 +130,7 @@ sqlparse==0.4.1
     #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   django
-stevedore==3.3.0
+stevedore==3.4.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
@@ -151,7 +153,7 @@ webob==1.8.7
     #   xblock
 wrapt==1.12.1
     # via astroid
-xblock==1.5.0
+xblock==1.5.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
