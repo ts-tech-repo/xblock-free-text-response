@@ -9,6 +9,8 @@ disable =
 	too-many-arguments,
 	too-many-instance-attributes,
 	too-many-public-methods,
+        unspecified-encoding,
+        use-maxsplit-arg,
 	useless-object-inheritance,
 
 [REPORTS]
