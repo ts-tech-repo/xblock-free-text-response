@@ -47,9 +47,8 @@ def _find_files(directory):
     """
     Find XML files in the directory
     """
-    pattern = "{directory}/*.xml".format(
-        directory=directory,
-    )
+    pattern = f"{directory}/*.xml"
+
     files = glob(pattern)
     return files
 

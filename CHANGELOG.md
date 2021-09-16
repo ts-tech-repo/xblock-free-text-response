@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 2.1.0
+* Added support for Django 3.0, 3.1 and 3.2
+
 ## Version 2.0.0
 * Dropped support for python 3.5
 * Fixed failures in upgrade requirements workflow execution

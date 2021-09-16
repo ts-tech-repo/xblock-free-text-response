@@ -117,29 +117,18 @@ class FreeTextResponseViewMixin(
         if self.weight == 0:
             result = ''
         elif self.score == 0.0:
-            result = "({})".format(
-                self.ngettext(
-                    "{weight} point possible",
-                    "{weight} points possible",
-                    self.weight,
-                ).format(
-                    weight=self.weight,
-                )
-            )
+            weight = self.weight
+            temp = self.ngettext(f'{weight} point possible',
+                                 f'{weight} points possible', weight)
+            result = f"({temp})"
         else:
             scaled_score = self.score * self.weight
             # No trailing zero and no scientific notation
-            score_string = ('%.15f' % scaled_score).rstrip('0').rstrip('.')
-            result = "({})".format(
-                self.ngettext(
-                    "{score_string}/{weight} point",
-                    "{score_string}/{weight} points",
-                    self.weight,
-                ).format(
-                    score_string=score_string,
-                    weight=self.weight,
-                )
-            )
+            score_string = f'{scaled_score:.15f}'.rstrip('0').rstrip('.')
+            weight = self.weight
+            temp = self.ngettext(f'{score_string}/{weight} point',
+                                 f'{score_string}/{weight} points', weight)
+            result = f"({temp})"
         return result
 
     def _get_used_attempts_feedback(self):
