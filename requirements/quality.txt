@@ -11,18 +11,18 @@ appdirs==1.4.4
     #   fs
 astroid==2.8.0
     # via pylint
-boto3==1.18.43
+boto3==1.18.54
     # via
     #   -r requirements/test.txt
     #   fs-s3fs
-botocore==1.21.43
+botocore==1.21.54
     # via
     #   -r requirements/test.txt
     #   boto3
     #   s3transfer
-coverage==5.5
+coverage==6.0
     # via -r requirements/test.txt
-ddt==1.4.2
+ddt==1.4.4
     # via -r requirements/test.txt
 django==2.2.24
     # via
@@ -81,7 +81,7 @@ pbr==5.6.0
     # via
     #   -r requirements/test.txt
     #   stevedore
-platformdirs==2.3.0
+platformdirs==2.4.0
     # via pylint
 pycodestyle==2.7.0
     # via -r requirements/quality.in
@@ -97,7 +97,7 @@ python-dateutil==2.8.2
     #   -r requirements/test.txt
     #   botocore
     #   xblock
-pytz==2021.1
+pytz==2021.3
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
@@ -140,7 +140,7 @@ typing-extensions==3.10.0.2
     # via
     #   astroid
     #   pylint
-urllib3==1.26.6
+urllib3==1.26.7
     # via
     #   -r requirements/test.txt
     #   botocore
