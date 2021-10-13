@@ -3,7 +3,7 @@ Free Text Response XBlock
 
 XBlock to capture a free-text response.
 
-|badge-travis|
+|badge-ci|
 |badge-coveralls|
 
 This package provides an XBlock for use with the EdX Platform and makes
@@ -44,5 +44,5 @@ and add the following:
 
 .. |badge-coveralls| image:: https://coveralls.io/repos/github/Stanford-Online/xblock-free-text-response/badge.svg?branch=master
    :target: https://coveralls.io/github/Stanford-Online/xblock-free-text-response?branch=master
-.. |badge-travis| image:: https://travis-ci.org/Stanford-Online/xblock-free-text-response.svg?branch=master
-   :target: https://travis-ci.org/Stanford-Online/xblock-free-text-response
+.. |badge-ci| image:: https://github.com/edx/xblock-free-text-response/workflows/Python%20CI/badge.svg?branch=master
+   :target: https://github.com/edx/xblock-free-text-response/actions?query=workflow%3A%22Python+CI%22

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-11 12:26+0300\n"
+"POT-Creation-Date: 2021-10-13 17:58+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -165,35 +165,35 @@ msgstr ""
 msgid "No responses to show at this time"
 msgstr ""
 
-#: views.py:122
+#: views.py:121
 #, python-brace-format
 msgid "{weight} point possible"
 msgid_plural "{weight} points possible"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:135
+#: views.py:129
 #, python-brace-format
 msgid "{score_string}/{weight} point"
 msgid_plural "{score_string}/{weight} points"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:153
+#: views.py:142
 #, python-brace-format
 msgid "You have used {count_attempts} of {max_attempts} submission"
 msgid_plural "You have used {count_attempts} of {max_attempts} submissions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:177
+#: views.py:166
 #, python-brace-format
 msgid "Your response must be between {min} and {max} word."
 msgid_plural "Your response must be between {min} and {max} words."
 msgstr[0] ""
 msgstr[1] ""
 
-#: views.py:273
+#: views.py:262
 #, python-brace-format
 msgid "Invalid Word Count. {word_count_message}"
 msgstr ""
