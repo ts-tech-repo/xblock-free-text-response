@@ -59,9 +59,9 @@ class FreetextResponseXblockTestCase(unittest.TestCase):
         """
         Checks workbench scenarios title and basic scenario
         """
-        result_title = 'Free Text Response Single'
+        result_title = 'Free Text Response Many'
         basic_scenario = "<freetextresponse />"
-        test_result = self.xblock.workbench_scenarios()
+        test_result = sorted(self.xblock.workbench_scenarios())
         self.assertEqual(result_title, test_result[0][0])
         self.assertIn(basic_scenario, test_result[0][1])
 
