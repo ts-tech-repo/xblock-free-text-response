@@ -8,9 +8,9 @@ appdirs==1.4.4
     # via fs
 asgiref==3.4.1
     # via django
-boto3==1.20.6
+boto3==1.20.11
     # via fs-s3fs
-botocore==1.23.6
+botocore==1.23.11
     # via
     #   boto3
     #   s3transfer
@@ -26,7 +26,7 @@ django-pyfs==3.1.0
     # via -r requirements/test.in
 edx-opaque-keys==2.2.2
     # via -r requirements/test.in
-fs==2.4.13
+fs==2.4.14
     # via
     #   django-pyfs
     #   fs-s3fs
@@ -41,7 +41,7 @@ lazy==1.4
     # via -r requirements/test.in
 lxml==4.6.4
     # via xblock
-mako==1.1.5
+mako==1.1.6
     # via xblock-utils
 markupsafe==2.0.1
     # via
@@ -49,7 +49,7 @@ markupsafe==2.0.1
     #   xblock
 mock==4.0.3
     # via -r requirements/test.in
-pbr==5.7.0
+pbr==5.8.0
     # via stevedore
 pymongo==3.12.1
     # via edx-opaque-keys
@@ -66,7 +66,7 @@ pyyaml==6.0
     # via xblock
 s3transfer==0.5.0
     # via boto3
-simplejson==3.17.5
+simplejson==3.17.6
     # via xblock-utils
 six==1.16.0
     # via
