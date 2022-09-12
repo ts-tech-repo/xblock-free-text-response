@@ -44,5 +44,5 @@ and add the following:
 
 .. |badge-coveralls| image:: https://coveralls.io/repos/github/Stanford-Online/xblock-free-text-response/badge.svg?branch=master
    :target: https://coveralls.io/github/Stanford-Online/xblock-free-text-response?branch=master
-.. |badge-ci| image:: https://github.com/edx/xblock-free-text-response/workflows/Python%20CI/badge.svg?branch=master
-   :target: https://github.com/edx/xblock-free-text-response/actions?query=workflow%3A%22Python+CI%22
+.. |badge-ci| image:: https://github.com/openedx/xblock-free-text-response/workflows/Python%20CI/badge.svg?branch=master
+   :target: https://github.com/openedx/xblock-free-text-response/actions?query=workflow%3A%22Python+CI%22
