@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 3.0.0
+* Removed Support for Django 2.2, 3.0 and 3.1
+
 ## Version 2.1.0
 * Added support for Django 3.0, 3.1 and 3.2
 

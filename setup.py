@@ -7,11 +7,23 @@ from os import path, walk
 
 from setuptools import setup
 
-version = '2.1.1'
 description = __doc__.strip().split('\n')[0]
 this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.rst')) as file_in:
     long_description = file_in.read()
+
+
+def get_version(*file_paths):
+    """
+    Extract the version string from the file at the given relative path fragments.
+    """
+    filename = os.path.join(os.path.dirname(__file__), *file_paths)
+    version_file = open(filename, encoding="utf8").read()
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError('Unable to find version string.')
 
 
 def package_data(pkg, roots):
@@ -94,10 +106,11 @@ def is_requirement(line):
 
     return line and line.strip() and not line.startswith(('-r', '#', '-e', 'git+', '-c'))
 
+VERSION = get_version('freetextresponse', '__init__.py')
 
 setup(
     name='xblock-free-text-response',
-    version=version,
+    version=VERSION,
     description=description,
     long_description=long_description,
     author='stv',
@@ -133,12 +146,8 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: JavaScript',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.8',
         'Framework :: Django',
-        'Framework :: Django :: 2.2',
-        'Framework :: Django :: 3.0',
-        'Framework :: Django :: 3.1',
         'Framework :: Django :: 3.2',
         'Topic :: Education',
         'Topic :: Internet :: WWW/HTTP',
