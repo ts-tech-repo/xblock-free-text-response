@@ -12,7 +12,6 @@ from django.db import IntegrityError
 
 from freetextresponse.models import Credit
 from freetextresponse.views import _is_at_least_one_phrase_present  # noqa
-from freetextresponse.utils import _
 from freetextresponse.xblocks import FreeTextResponse
 
 from .tests_utils import make_xblock
@@ -73,7 +72,7 @@ class FreetextResponseXblockTestCase(unittest.TestCase):
         msg = 'weight attempts cannot be negative'
         result = ValidationMessage(
             ValidationMessage.ERROR,
-            _(msg)
+            msg
         )
         test_result = self.xblock._generate_validation_message(msg)
         self.assertEqual(
@@ -345,7 +344,7 @@ class FreetextResponseXblockTestCase(unittest.TestCase):
         self.xblock.max_attempts = max_attempts
         self.xblock.count_attempts = count_attempts
         self.assertEqual(
-            _(result),
+            result,
             self.xblock._get_used_attempts_feedback(),
         )
 
@@ -371,7 +370,7 @@ class FreetextResponseXblockTestCase(unittest.TestCase):
         self.xblock.min_word_count = min_word_count
         self.xblock.max_word_count = max_word_count
         self.assertEqual(
-            _(result),
+            result,
             self.xblock._get_word_count_message(),
         )
 
@@ -391,7 +390,7 @@ class FreetextResponseXblockTestCase(unittest.TestCase):
         self.xblock.min_word_count = test_data['min_word_count']
         self.xblock.max_word_count = test_data['max_word_count']
         self.assertEqual(
-            _(str(test_data['result'])),
+            str(test_data['result']),
             self.xblock._get_user_alert(
                 ignore_attempts=test_data['ignore_attempts']
             ),
@@ -420,7 +419,7 @@ class FreetextResponseXblockTestCase(unittest.TestCase):
         )
         self.xblock.submitted_message = 'test submission received message'
         self.assertEqual(
-            _(result),
+            result,
             self.xblock._get_submitted_message(),
         )
 
@@ -436,7 +435,7 @@ class FreetextResponseXblockTestCase(unittest.TestCase):
         self.xblock.weight = test_data['weight']
         self.xblock.score = test_data['score']
         self.assertEqual(
-            _(test_data['result']),
+            test_data['result'],
             self.xblock._get_problem_progress(),
         )
 
