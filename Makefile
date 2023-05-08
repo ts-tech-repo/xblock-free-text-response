@@ -15,6 +15,11 @@ ifeq ($(strip $(po_files)),)
 endif
 mo_files := $(patsubst %.po,%.mo,$(po_files))
 
+WORKING_DIR := $(module_root)
+EXTRACT_DIR := $(WORKING_DIR)/conf/locale/en/LC_MESSAGES
+EXTRACTED_DJANGO_PARTIAL := $(EXTRACT_DIR)/django-partial.po
+EXTRACTED_DJANGO := $(EXTRACT_DIR)/django.po
+
 .PHONY: help
 help:  ## This.
 	@perl -ne 'print if /^[a-zA-Z_-]+:.*## .*$$/' $(MAKEFILE_LIST) \
@@ -133,3 +138,7 @@ docker_shell:
 docker_static: ; make build_docker; $(run-in-docker)  ## Compile static assets in docker container
 docker_translations: ; make build_docker; $(run-in-docker)  ## Update translation files in docker container
 docker_test: ; make build_docker; $(run-in-docker)  ## Run tests in docker container
+
+extract_translations: ## extract strings to be translated, outputting .po files
+	cd $(WORKING_DIR) && i18n_tool extract
+	mv $(EXTRACTED_DJANGO_PARTIAL) $(EXTRACTED_DJANGO)
