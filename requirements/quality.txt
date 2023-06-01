@@ -13,12 +13,12 @@ arrow==1.2.3
     # via
     #   -r requirements/test.txt
     #   jinja2-time
-asgiref==3.6.0
+asgiref==3.7.2
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   django
-astroid==2.15.4
+astroid==2.15.5
     # via pylint
 binaryornot==0.4.4
     # via
@@ -28,11 +28,11 @@ boto==2.49.0
     # via
     #   -r requirements/test.txt
     #   xblock-sdk
-boto3==1.26.130
+boto3==1.26.142
     # via
     #   -r requirements/test.txt
     #   fs-s3fs
-botocore==1.29.130
+botocore==1.29.142
     # via
     #   -r requirements/test.txt
     #   boto3
@@ -57,7 +57,7 @@ cookiecutter==2.1.1
     # via
     #   -r requirements/test.txt
     #   xblock-sdk
-coverage==7.2.5
+coverage==7.2.7
     # via -r requirements/test.txt
 ddt==1.6.0
     # via -r requirements/test.txt
@@ -145,7 +145,7 @@ pbr==5.11.1
     # via
     #   -r requirements/test.txt
     #   stevedore
-platformdirs==3.5.0
+platformdirs==3.5.1
     # via pylint
 pycodestyle==2.10.0
     # via -r requirements/quality.in
@@ -182,7 +182,7 @@ pyyaml==6.0
     #   -r requirements/test.txt
     #   cookiecutter
     #   xblock
-requests==2.30.0
+requests==2.31.0
     # via
     #   -r requirements/test.txt
     #   cookiecutter
@@ -209,7 +209,7 @@ sqlparse==0.4.4
     #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   django
-stevedore==5.0.0
+stevedore==5.1.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
@@ -221,11 +221,14 @@ tomli==2.0.1
     # via pylint
 tomlkit==0.11.8
     # via pylint
-typing-extensions==4.5.0
+typing-extensions==4.6.2
     # via
+    #   -r requirements/base.txt
+    #   -r requirements/test.txt
+    #   asgiref
     #   astroid
     #   pylint
-urllib3==1.26.15
+urllib3==1.26.16
     # via
     #   -r requirements/test.txt
     #   botocore
@@ -253,7 +256,7 @@ xblock[django]==1.6.2
     #   xblock-utils
 xblock-sdk==0.5.4
     # via -r requirements/test.txt
-xblock-utils==3.0.0
+xblock-utils==3.1.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
