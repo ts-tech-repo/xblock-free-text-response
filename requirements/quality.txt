@@ -24,11 +24,11 @@ binaryornot==0.4.4
     # via
     #   -r requirements/test.txt
     #   cookiecutter
-boto3==1.26.161
+boto3==1.27.0
     # via
     #   -r requirements/test.txt
     #   fs-s3fs
-botocore==1.29.161
+botocore==1.30.0
     # via
     #   -r requirements/test.txt
     #   boto3
@@ -59,7 +59,7 @@ ddt==1.6.0
     # via -r requirements/test.txt
 dill==0.3.6
     # via pylint
-django==3.2.19
+django==3.2.20
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/base.txt
@@ -217,7 +217,7 @@ tomli==2.0.1
     # via pylint
 tomlkit==0.11.8
     # via pylint
-typing-extensions==4.6.3
+typing-extensions==4.7.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
