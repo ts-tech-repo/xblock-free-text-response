@@ -12,23 +12,23 @@ appdirs==1.4.4
 arrow==1.2.3
     # via
     #   -r requirements/test.txt
-    #   jinja2-time
+    #   cookiecutter
 asgiref==3.7.2
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   django
-astroid==2.15.5
+astroid==2.15.6
     # via pylint
 binaryornot==0.4.4
     # via
     #   -r requirements/test.txt
     #   cookiecutter
-boto3==1.27.0
+boto3==1.28.1
     # via
     #   -r requirements/test.txt
     #   fs-s3fs
-botocore==1.30.0
+botocore==1.31.1
     # via
     #   -r requirements/test.txt
     #   boto3
@@ -41,15 +41,15 @@ chardet==5.1.0
     # via
     #   -r requirements/test.txt
     #   binaryornot
-charset-normalizer==3.1.0
+charset-normalizer==3.2.0
     # via
     #   -r requirements/test.txt
     #   requests
-click==8.1.3
+click==8.1.4
     # via
     #   -r requirements/test.txt
     #   cookiecutter
-cookiecutter==2.1.1
+cookiecutter==2.2.2
     # via
     #   -r requirements/test.txt
     #   xblock-sdk
@@ -95,11 +95,6 @@ jinja2==3.1.2
     # via
     #   -r requirements/test.txt
     #   cookiecutter
-    #   jinja2-time
-jinja2-time==0.2.0
-    # via
-    #   -r requirements/test.txt
-    #   cookiecutter
 jmespath==1.0.1
     # via
     #   -r requirements/test.txt
@@ -111,7 +106,7 @@ lazy==1.5
     #   xblock
 lazy-object-proxy==1.9.0
     # via astroid
-lxml==4.9.2
+lxml==4.9.3
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
@@ -141,7 +136,7 @@ pbr==5.11.1
     # via
     #   -r requirements/test.txt
     #   stevedore
-platformdirs==3.8.0
+platformdirs==3.8.1
     # via pylint
 pycodestyle==2.10.0
     # via -r requirements/quality.in
