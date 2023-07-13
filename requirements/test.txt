@@ -7,14 +7,14 @@
 appdirs==1.4.4
     # via fs
 arrow==1.2.3
-    # via jinja2-time
+    # via cookiecutter
 asgiref==3.7.2
     # via django
 binaryornot==0.4.4
     # via cookiecutter
-boto3==1.27.0
+boto3==1.28.1
     # via fs-s3fs
-botocore==1.30.0
+botocore==1.31.1
     # via
     #   boto3
     #   s3transfer
@@ -22,11 +22,11 @@ certifi==2023.5.7
     # via requests
 chardet==5.1.0
     # via binaryornot
-charset-normalizer==3.1.0
+charset-normalizer==3.2.0
     # via requests
-click==8.1.3
+click==8.1.4
     # via cookiecutter
-cookiecutter==2.1.1
+cookiecutter==2.2.2
     # via xblock-sdk
 coverage==7.2.7
     # via -r requirements/test.in
@@ -55,10 +55,6 @@ fs-s3fs==1.1.1
 idna==3.4
     # via requests
 jinja2==3.1.2
-    # via
-    #   cookiecutter
-    #   jinja2-time
-jinja2-time==0.2.0
     # via cookiecutter
 jmespath==1.0.1
     # via
@@ -68,7 +64,7 @@ lazy==1.5
     # via
     #   -r requirements/test.in
     #   xblock
-lxml==4.9.2
+lxml==4.9.3
     # via
     #   xblock
     #   xblock-sdk
