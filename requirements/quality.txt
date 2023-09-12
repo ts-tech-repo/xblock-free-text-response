@@ -24,12 +24,12 @@ binaryornot==0.4.4
     # via
     #   -r requirements/test.txt
     #   cookiecutter
-boto3==1.28.36
+boto3==1.28.45
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   fs-s3fs
-botocore==1.31.36
+botocore==1.31.45
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
@@ -55,13 +55,13 @@ cookiecutter==2.3.0
     # via
     #   -r requirements/test.txt
     #   xblock-sdk
-coverage==7.3.0
+coverage==7.3.1
     # via -r requirements/test.txt
 ddt==1.6.0
     # via -r requirements/test.txt
 dill==0.3.7
     # via pylint
-django==3.2.20
+django==3.2.21
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/base.txt
@@ -179,7 +179,7 @@ python-slugify==8.0.1
     # via
     #   -r requirements/test.txt
     #   cookiecutter
-pytz==2023.3
+pytz==2023.3.post1
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
