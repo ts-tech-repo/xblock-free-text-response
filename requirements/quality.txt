@@ -24,12 +24,12 @@ binaryornot==0.4.4
     # via
     #   -r requirements/test.txt
     #   cookiecutter
-boto3==1.28.58
+boto3==1.28.62
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   fs-s3fs
-botocore==1.31.58
+botocore==1.31.62
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
@@ -61,7 +61,7 @@ ddt==1.6.0
     # via -r requirements/test.txt
 dill==0.3.7
     # via pylint
-django==3.2.21
+django==3.2.22
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/base.txt
@@ -119,6 +119,7 @@ mako==1.2.4
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
+    #   xblock
     #   xblock-utils
 markdown-it-py==3.0.0
     # via
@@ -156,7 +157,7 @@ pygments==2.16.1
     # via
     #   -r requirements/test.txt
     #   rich
-pylint==3.0.0
+pylint==3.0.1
     # via -r requirements/quality.in
 pymongo==3.13.0
     # via
@@ -203,10 +204,11 @@ s3transfer==0.7.0
     #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   boto3
-simplejson==3.19.1
+simplejson==3.19.2
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
+    #   xblock
     #   xblock-sdk
     #   xblock-utils
 six==1.16.0
@@ -265,7 +267,7 @@ webob==1.8.7
     #   -r requirements/test.txt
     #   xblock
     #   xblock-sdk
-xblock[django]==1.8.0
+xblock[django]==1.8.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
@@ -273,7 +275,7 @@ xblock[django]==1.8.0
     #   xblock-utils
 xblock-sdk==0.7.0
     # via -r requirements/test.txt
-xblock-utils==3.4.1
+xblock-utils==4.0.0
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
