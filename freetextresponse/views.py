@@ -4,8 +4,13 @@ Handle view logic for the XBlock
 from six import text_type
 from xblock.core import XBlock
 from xblock.validation import ValidationMessage
-from xblockutils.resources import ResourceLoader
-from xblockutils.studio_editable import StudioEditableXBlockMixin
+try:
+    from xblock.utils.resources import ResourceLoader
+    from xblock.utils.studio_editable import StudioEditableXBlockMixin
+except ModuleNotFoundError:
+    # For backward compatibility with releases older than Quince.
+    from xblockutils.resources import ResourceLoader
+    from xblockutils.studio_editable import StudioEditableXBlockMixin
 
 from .mixins.dates import EnforceDueDates
 from .mixins.fragment import XBlockFragmentBuilderMixin
