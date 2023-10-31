@@ -24,14 +24,12 @@ binaryornot==0.4.4
     # via
     #   -r requirements/test.txt
     #   cookiecutter
-boto3==1.28.68
+boto3==1.28.73
     # via
-    #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   fs-s3fs
-botocore==1.31.68
+botocore==1.31.73
     # via
-    #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   boto3
     #   s3transfer
@@ -67,7 +65,6 @@ django==3.2.22
     #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   django-pyfs
-    #   openedx-django-pyfs
     #   xblock-sdk
 django-pyfs==3.2.0
     # via -r requirements/test.txt
@@ -79,14 +76,11 @@ fs==2.4.16
     #   -r requirements/test.txt
     #   django-pyfs
     #   fs-s3fs
-    #   openedx-django-pyfs
     #   xblock
 fs-s3fs==1.1.1
     # via
-    #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   django-pyfs
-    #   openedx-django-pyfs
     #   xblock-sdk
 idna==3.4
     # via
@@ -100,15 +94,11 @@ jinja2==3.1.2
     #   cookiecutter
 jmespath==1.0.1
     # via
-    #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   boto3
     #   botocore
 lazy==1.6
-    # via
-    #   -r requirements/base.txt
-    #   -r requirements/test.txt
-    #   xblock
+    # via -r requirements/test.txt
 lxml==4.9.3
     # via
     #   -r requirements/base.txt
@@ -120,7 +110,6 @@ mako==1.2.4
     #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   xblock
-    #   xblock-utils
 markdown-it-py==3.0.0
     # via
     #   -r requirements/test.txt
@@ -140,11 +129,6 @@ mdurl==0.1.2
     #   markdown-it-py
 mock==5.1.0
     # via -r requirements/test.txt
-openedx-django-pyfs==3.4.0
-    # via
-    #   -r requirements/base.txt
-    #   -r requirements/test.txt
-    #   xblock
 pbr==5.11.1
     # via
     #   -r requirements/test.txt
@@ -201,7 +185,6 @@ rich==13.6.0
     #   cookiecutter
 s3transfer==0.7.0
     # via
-    #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   boto3
 simplejson==3.19.2
@@ -210,7 +193,6 @@ simplejson==3.19.2
     #   -r requirements/test.txt
     #   xblock
     #   xblock-sdk
-    #   xblock-utils
 six==1.16.0
     # via
     #   -r requirements/base.txt
@@ -250,7 +232,6 @@ typing-extensions==4.8.0
     #   rich
 urllib3==1.26.18
     # via
-    #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   botocore
     #   requests
@@ -260,26 +241,19 @@ web-fragments==2.1.0
     #   -r requirements/test.txt
     #   xblock
     #   xblock-sdk
-    #   xblock-utils
 webob==1.8.7
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
     #   xblock
     #   xblock-sdk
-xblock[django]==1.8.1
+xblock==1.8.1
     # via
     #   -r requirements/base.txt
     #   -r requirements/test.txt
-    #   xblock
     #   xblock-sdk
-    #   xblock-utils
 xblock-sdk==0.7.0
     # via -r requirements/test.txt
-xblock-utils==4.0.0
-    # via
-    #   -r requirements/base.txt
-    #   -r requirements/test.txt
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
