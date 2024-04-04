@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 4.1.0
+* Added python 3.11 support. Dropped django32 support.
+
 ## Version 4.0.0
 
 * Remove Transifex calls and bundled translation files for the OEP-58 proposal.
