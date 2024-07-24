@@ -46,3 +46,44 @@
         </div>
     {% endif %}
 </div>
+
+{%  if loggedin_user.is_staff %}
+	<div aria-hidden="true" class="wrap-instructor-info">
+		<a class="instructor-info-action" id="grade-submissions-button" href="#grade-{{block_id}}">Grade Submissions</a>
+  	</div>
+{%endif%}
+<section aria-hidden="true" class="modal grade-submission" id="grade-{{block_id}}" style="height: 75%; position: fixed; opacity: 1; z-index: 11000; left: 50%; margin-left: -402px; top: 100px; max-height: 600px;" tabindex="-1">
+    <div class="inner-wrapper" style="color: black; overflow: auto;">
+      <header><h2><span class="display_name">Staff Graded Assignment</span> - Staff Graded Assignment</h2></header>
+      <br>
+      <div>
+        <a class="instructor-info-action button btn-download-all" href="#" id="download-init-button">Download All Submissions</a>
+      </div>
+      <p class="task-message"></p>
+      <div id="grade-info" style="display: block;">
+{%  if loggedin_user.is_staff %}
+
+    <table class="gridtable tablesorter" id="submissions">
+      <thead>
+      <tr>
+        <th class="header">Username <i class="icon fa fa-sort"></i></th>
+        <th class="header headerSortDown">Name <i class="icon fa fa-sort"></i></th>
+        <th class="header">Filename <i class="icon fa fa-sort"></i></th>
+        <th class="header">Uploaded <i class="icon fa fa-sort"></i></th>
+        <th class="header headerSortUp">Submitted <i class="icon fa fa-sort"></i></th>
+        <th class="header">Grade <i class="icon fa fa-sort"></i></th>
+        <th class="header">Instructor's comments <i class="icon fa fa-sort"></i></th>
+        <th class="header">Annotated <i class="icon fa fa-sort"></i></th>
+        <th class="header" colspan="2">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+
+
+
+	</tbody>
+    </table>
+   {%endif%}
+  </div>
+    </div>
+  </section>

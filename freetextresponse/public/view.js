@@ -174,4 +174,42 @@ function FreeTextResponseView(runtime, element) {
         userAlertMessage.text('');
         setClassForTextAreaParent('unanswered');
     });
+    
+    function updateIframe() {
+      if (isInIframe && !currentIFrameHeight) {
+        currentIFrameHeight = $("body").height()
+        addMaxHeightInIframe()
+        if (currentIFrameHeight < 600) {
+          sendResizeMessage(600)
+        }
+      }
+    }
+
+    function addMaxHeightInIframe() {
+      $(".grade-submission").css("max-height", "600px")
+    }
+
+    function sendResizeMessage(height) {
+      // This blocks checks to see if the xBlock is part 
+      // of Learning MFE
+      if (window.parent !== window) {
+        window.parent.postMessage({
+          type: 'plugin.resize',
+          payload: {
+            height: height,
+          }
+        }, document.referrer
+        );
+      }
+    }
+
+    $("#grade-submissions-button").click({
+        section_id = $(this).attr("href").replace("#", ".");
+        $(section_id).show();
+        updateIframe();
+        
+
+    })
+
+
 }

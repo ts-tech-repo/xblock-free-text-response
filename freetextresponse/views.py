@@ -17,7 +17,11 @@ from .mixins.fragment import XBlockFragmentBuilderMixin
 from .mixins.i18n import I18nXBlockMixin
 from .models import Credit
 from .models import MAX_RESPONSES
+from lms.djangoapps.courseware.models import StudentModule
 
+import logging
+
+log = logging.getLogger(__name__)
 
 #  pylint: disable=no-member
 class FreeTextResponseViewMixin(
@@ -54,6 +58,9 @@ class FreeTextResponseViewMixin(
             'other_responses': self.get_other_answers(),
             'user_alert': '',
             'submitted_message': '',
+            'loggedin_user' : self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id),
+            'block_id' : self.scope_ids.def_id,
+            'users_submissions' : StudentModule.get_state_by_params(self.scope_ids.usage_id.context_key, [self.scope_ids.usage_id])
         })
         return context
 
