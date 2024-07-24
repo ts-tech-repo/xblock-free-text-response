@@ -30,6 +30,7 @@ function FreeTextResponseView(runtime, element) {
     var cachedAnswerId = xblockId + '_cached_answer';
     var problemProgressId = xblockId + '_problem_progress';
     var usedAttemptsFeedbackId = xblockId + '_used_attempts_feedback';
+    var gradeSubmissions = $element.find('#grade-submissions-button');
 
     if (typeof $xblocksContainer.data(cachedAnswerId) !== 'undefined') {
         textareaStudentAnswer.text($xblocksContainer.data(cachedAnswerId));
@@ -203,7 +204,7 @@ function FreeTextResponseView(runtime, element) {
       }
     }
 
-    buttonSave.on('click', function () {
+    gradeSubmissions.on('click', function () {
         section_id = $(this).attr("href").replace("#", ".");
         $(section_id).show();
         updateIframe();
