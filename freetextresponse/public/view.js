@@ -203,11 +203,10 @@ function FreeTextResponseView(runtime, element) {
       }
     }
 
-    $("#grade-submissions-button").click({
+    buttonSave.on('click', function () {
         section_id = $(this).attr("href").replace("#", ".");
         $(section_id).show();
         updateIframe();
-        
 
     })
 
