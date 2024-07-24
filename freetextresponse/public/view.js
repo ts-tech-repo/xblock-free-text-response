@@ -177,7 +177,7 @@ function FreeTextResponseView(runtime, element) {
     });
     
     function updateIframe() {
-      if (isInIframe && !currentIFrameHeight) {
+      if (window.parent !== window && !currentIFrameHeight) {
         currentIFrameHeight = $("body").height()
         addMaxHeightInIframe()
         if (currentIFrameHeight < 600) {
@@ -205,7 +205,7 @@ function FreeTextResponseView(runtime, element) {
     }
 
     gradeSubmissions.on('click', function () {
-        section_id = gradeSubmissions.attr("href").replace("#", ".");
+        var section_id = gradeSubmissions.attr("href").replace("#", ".");
         $(section_id).show();
         updateIframe();
 
