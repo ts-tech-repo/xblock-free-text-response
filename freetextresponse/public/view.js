@@ -205,7 +205,7 @@ function FreeTextResponseView(runtime, element) {
     }
 
     gradeSubmissions.on('click', function () {
-        section_id = $(this).attr("href").replace("#", ".");
+        section_id = gradeSubmissions.attr("href").replace("#", ".");
         $(section_id).show();
         updateIframe();
 
