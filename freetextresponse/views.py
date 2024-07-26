@@ -437,8 +437,8 @@ class FreeTextResponseViewMixin(
         users_submissions = []
 
         for submission in submissions:
-            users_submissions.append({"username" : submission.student.username, "firstname" : submission.student.first_name, "Grade" : self.get_score(submission.student), "comments" : json.loads(submission.state).get("comment", ""), "module_id" : submission.id, "max_points" : self.weight, "student_answer" : json.loads(submission.state).get("student_answer", ""), "submission_id" : self.get_submission(submission.student), "student_id" : anonymous_id_for_user(submission.student, self.course_id) })
-        return {"submissions" : users_submissions, "max_score" : self.max_score(), "display_name" : self.display_name}
+            users_submissions.append({"username" : submission.student.username, "firstname" : submission.student.first_name, "score" : self.get_score(submission.student), "comments" : json.loads(submission.state).get("comment", ""), "module_id" : submission.id, "max_points" : self.weight, "student_answer" : json.loads(submission.state).get("student_answer", ""), "submission_id" : self.get_submission(submission.student), "student_id" : anonymous_id_for_user(submission.student, self.course_id) })
+        return {"submissions" : users_submissions}
     
     def is_course_staff(self):
         return self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id).is_staff

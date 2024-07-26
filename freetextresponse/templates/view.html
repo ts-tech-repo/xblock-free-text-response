@@ -78,14 +78,13 @@
       </tr>
       </thead>
       <tbody>
-
             {% for submission in users_submissions.submissions %}
                 <tr>
                     <td>{{submission.username}}</td>
                     <td>{{submission.firstname}}</td>
                     <td>{{submission.student_answer}}</td>
-                    {% if submission.Grade %}
-                      <td id="grade-{{submission.module_id}}">{{submission.Grade}}/{{submission.max_points}}</td>
+                    {% if submission.score %}
+                      <td id="grade-{{submission.module_id}}">{{submission.score}}/{{submission.max_points}}</td>
                       <td id="comment-{{submission.module_id}}">{{submission.comments}}</td>
                     {%else%}
                       <td id="grade-{{submission.module_id}}"></td>

@@ -232,7 +232,7 @@ function FreeTextResponseView(runtime, element) {
         var form = $(element).find("#enter-grade-form");
         $(element).find('#student-name').text(row.find("td:eq(0)").text());
         form.find('#module_id-input').val(row.find("td:eq(5)").text());
-        form.find('#grade-input').val(row.find("td:eq(3)").text());
+        form.find('#grade-input').val(row.find("td:eq(3)").text().split("/")[0]);
         form.find('#comment-input').text(row.find("td:eq(4)").text());
         form.find('#comment-input').val(row.find("td:eq(4)").text());
         form.find('#submission_id-input').val(row.find("td:eq(8)").text());
@@ -319,10 +319,10 @@ function FreeTextResponseView(runtime, element) {
             // Add download urls to template context
             data.downloadUrl = staffDownloadUrl;
             
-            data.map(function (submission) {
+            data["submissions"].map(function (submission) {
                 console.log($(element).find('#grade-info #grade-' + submission.module_id))
-                if(submission.Grade != null) {
-                    $(element).find('#grade-info #grade-' + submission.module_id).text((submission.Grade) + "/" + (submission.max_points));
+                if(submission.score != null) {
+                    $(element).find('#grade-info #grade-' + submission.module_id).text((submission.score) + "/" + (submission.max_points));
                     $(element).find('#grade-info #comment-' + submission.module_id).text(submission.comments);
                 }else {
                     $(element).find('#grade-info #grade-' + submission.module_id).text("");
