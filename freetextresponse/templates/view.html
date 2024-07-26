@@ -52,37 +52,83 @@
 		<a class="instructor-info-action" id="grade-submissions-button" href="#grade-{{block_id}}">Grade Submissions</a>
   	</div>
 {%endif%}
-<section aria-hidden="true" class="modal grade-submission" id="grade-{{block_id}}" style="height: 75%; position: fixed; opacity: 1; z-index: 11000; left: 50%; margin-left: -402px; top: 100px; max-height: 600px;" tabindex="-1">
+<section aria-hidden="true" class="modal staff-modal grade-submission" id="grade-{{block_id}}" style="height: auto; position: fixed; opacity: 1; z-index: 11000; left: 30%; margin-left: -402px; top: 100px; max-height: 600px;" tabindex="-1">
     <div class="inner-wrapper" style="color: black; overflow: auto;">
-      <header><h2><span class="display_name">Staff Graded Assignment</span> - Staff Graded Assignment</h2></header>
+      <header><h2><span class="display_name">Free Text Response</span></h2></header>
       <br>
-      <div>
+      <!-- <div>
         <a class="instructor-info-action button btn-download-all" href="#" id="download-init-button">Download All Submissions</a>
-      </div>
+      </div> -->
       <p class="task-message"></p>
       <div id="grade-info" style="display: block;">
 {%  if loggedin_user.is_staff %}
 
-    <table class="gridtable tablesorter" id="submissions">
+    <table class="gridtable tablesorter" id="submissions" border="1">
       <thead>
       <tr>
         <th class="header">Username <i class="icon fa fa-sort"></i></th>
         <th class="header headerSortDown">Name <i class="icon fa fa-sort"></i></th>
-        <th class="header">Filename <i class="icon fa fa-sort"></i></th>
-        <th class="header">Uploaded <i class="icon fa fa-sort"></i></th>
-        <th class="header headerSortUp">Submitted <i class="icon fa fa-sort"></i></th>
+        <th class="header headerSortDown">Student Answer <i class="icon fa fa-sort"></i></th>
         <th class="header">Grade <i class="icon fa fa-sort"></i></th>
         <th class="header">Instructor's comments <i class="icon fa fa-sort"></i></th>
-        <th class="header">Annotated <i class="icon fa fa-sort"></i></th>
+        <th style="display: none;">Module ID</th>
+        <th style="display: none;">User ID</th>
         <th class="header" colspan="2">Actions</th>
+        <th class="header" style="display: none;">Submission ID</th>
       </tr>
       </thead>
       <tbody>
 
-
+            {% for submission in users_submissions %}
+                <tr>
+                    <td>{{submission.username}}</td>
+                    <td>{{submission.firstname}}</td>
+                    <td>{{submission.student_answer}}</td>
+                    {% if submission.Grade %}
+                      <td id="grade-{{submission.module_id}}">{{submission.Grade}}/{{submission.max_points}}</td>
+                      <td id="comment-{{submission.module_id}}">{{submission.comments}}</td>
+                    {%else%}
+                      <td id="grade-{{submission.module_id}}"></td>
+                      <td id="comment-{{submission.module_id}}"></td>
+                    {%endif%}
+                    
+                    <td style="display: none;">{{submission.module_id}}</td>
+                    <td style="display: none;">{{loggedin_user.id}}</td>
+                    <td><a class="enter-grade-button button" href="#enter-grade-{{ block_id }}">Enter Grade</a></td>
+                    <td style="display: none;">{{submission.submission_id}}</td>
+                </tr>
+            {%endfor%}
 
 	</tbody>
     </table>
+    <section aria-hidden="true" class="modal grade-modal" id="enter-grade-{{ block_id }}" tabindex="-1">
+        <div class="inner-wrapper" style="color: black">
+          <header><h2>
+            {% trans "Enter Grade" %}
+          </h2></header>
+          <br/>
+          <div style="display: block;">
+            <form id="enter-grade-form">
+              <input id="module_id-input" type="hidden" name="module_id"/>
+              <input id="submission_id-input" type="hidden" name="submission_id"/>
+              <div>{% blocktrans with student_name="<span id='student-name'/>" %}Grade for {{student_name}}{% endblocktrans %}</div>
+              <div>{% trans "Grade:" %} <input id="grade-input" name="grade"/>
+                <span class="error"></span></div>
+              <div>{% trans "Comment:" %} <textarea id="comment-input" name="comment" rows="4"></textarea></div>
+              <div>
+                <button type="submit">{% trans "Submit" %}</button>
+                <button type="button" id="enter-grade-cancel">
+                  {% trans "Cancel" %}
+                </button>
+                <button type="button" id="remove-grade">
+                  {% trans "Remove grade" %}
+                </button>
+                <i class="fa fa-spinner fa-pulse ccx-enter-grade-spinner"></i>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
    {%endif%}
   </div>
     </div>

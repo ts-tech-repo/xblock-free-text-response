@@ -43,14 +43,26 @@ class XBlockFragmentBuilderMixin(object):
         static_css = self.static_css or []
         static_js = self.static_js or []
         js_init = self.static_js_init
-        fragment = self.build_fragment(
-            template=template,
-            context=context,
-            css=static_css,
-            js=static_js,
-            js_init=js_init,
+        # fragment = self.build_fragment(
+        #     template=template,
+        #     context=context,
+        #     css=static_css,
+        #     js=static_js,
+        #     js_init=js_init,
+        # )
+        fragment = Fragment()
+        fragment.add_content(
+            self.loader.render_django_template(
+                "templates/view.html",
+                context=context,
+                i18n_service=self._i18n_service(),
+            )
         )
+        fragment.add_css(pkg_resources.resource_string(__name__, "../public/view.css").decode("utf8"))
+        fragment.add_javascript(pkg_resources.resource_string(__name__, "../public/view.js").decode("utf8"))
+        fragment.initialize_js("FreeTextResponseView")
         return fragment
+
 
     def build_fragment(
             self,

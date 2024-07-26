@@ -31,6 +31,11 @@ function FreeTextResponseView(runtime, element) {
     var problemProgressId = xblockId + '_problem_progress';
     var usedAttemptsFeedbackId = xblockId + '_used_attempts_feedback';
     var gradeSubmissions = $element.find('#grade-submissions-button');
+    var enterGradeUrl = runtime.handlerUrl(element, 'enter_grade');
+    var removeGradeUrl = runtime.handlerUrl(element, 'remove_grade');
+    var gradePopUpIsOpen = false;
+    var staffDownloadUrl = runtime.handlerUrl(element, 'staff_download')
+    var currentIFrameHeight = null;
 
     if (typeof $xblocksContainer.data(cachedAnswerId) !== 'undefined') {
         textareaStudentAnswer.text($xblocksContainer.data(cachedAnswerId));
@@ -177,7 +182,7 @@ function FreeTextResponseView(runtime, element) {
     });
     
     function updateIframe() {
-      if (window.parent !== window && !currentIFrameHeight) {
+      if (window.parent !== window   && !currentIFrameHeight) {
         currentIFrameHeight = $("body").height()
         addMaxHeightInIframe()
         if (currentIFrameHeight < 600) {
@@ -204,12 +209,175 @@ function FreeTextResponseView(runtime, element) {
       }
     }
 
-    gradeSubmissions.on('click', function () {
-        var section_id = gradeSubmissions.attr("href").replace("#", ".");
+    gradeSubmissions.leanModal().on('click', function () {
+        var section_id = gradeSubmissions.attr("href");
+        console.log($(section_id))
         $(section_id).show();
         updateIframe();
 
     })
+
+    $(element).find('.enter-grade-button')
+        .leanModal({ closeButton: '#enter-grade-cancel' })
+        .on('click', handleGradeEntry);
+
+    function gradeFormError(error) {
+        var form = $(element).find("#enter-grade-form");
+        form.find('.error').html(error);
+        }
+
+    function handleGradeEntry() {
+        var row = $(this).parents("tr");
+        console.log(row.find("td:eq(3)").text())
+        var form = $(element).find("#enter-grade-form");
+        $(element).find('#student-name').text(row.find("td:eq(0)").text());
+        form.find('#module_id-input').val(row.find("td:eq(5)").text());
+        form.find('#grade-input').val(row.find("td:eq(3)").text());
+        form.find('#comment-input').text(row.find("td:eq(4)").text());
+        form.find('#comment-input').val(row.find("td:eq(4)").text());
+        form.find('#submission_id-input').val(row.find("td:eq(8)").text());
+        
+        form.find('#remove-grade').prop('disabled', false);
+        form.find('.ccx-enter-grade-spinner').hide();
+        $("#lean_overlay").show()
+        form.off('submit').on('submit', function (event) {
+            var max_score = row.parents('#grade-info').data('max_score');
+            var score = Number(form.find('#grade-input').val());
+            event.preventDefault();
+            if (isNaN(score)) {
+            gradeFormError('<br/>' + gettext('Grade must be a number.'));
+            } else if (score !== parseInt(score)) {
+            gradeFormError('<br/>' + gettext('Grade must be an integer.'));
+            } else if (score < 0) {
+            gradeFormError('<br/>' + gettext('Grade must be positive.'));
+            } else if (score > max_score) {
+            gradeFormError('<br/>' + interpolate(gettext('Maximum score is %(max_score)s'), { max_score: max_score }, true));
+            } else {
+            // No errors
+            form.find('.ccx-enter-grade-spinner').show();
+            $.post(enterGradeUrl, form.serialize())
+                .success(renderStaffGrading)
+                .fail(function () {
+                form.find('.ccx-enter-grade-spinner').hide();
+                });
+            }
+        });
+        form.find('#remove-grade').off('click').on('click', function (event) {
+            $(this).prop('disabled', true);
+            form.find('.ccx-enter-grade-spinner').show();
+            var url = removeGradeUrl + '?module_id=' +
+            row.find("td:eq(5)").text() + '&student_id=' +
+            row.find("td:eq(6)").text();
+            event.preventDefault();
+            if (row.find("td:eq(2)").text()) {
+            // if there is no grade then it is pointless to call api.
+            $.get(url).success(renderStaffGrading).fail(function () {
+                $(this).prop('disabled', false);
+                form.find('.ccx-enter-grade-spinner').hide();
+            });
+            } else {
+            gradeFormError('<br/>' + gettext('No grade to remove.'));
+            }
+        });
+        form.find('#enter-grade-cancel').on('click', function () {
+            /* We're kind of stretching the limits of leanModal, here,
+            * by nesting modals one on top of the other.  One side effect
+            * is that when the enter grade modal is closed, it hides
+            * the overlay for itself and for the staff grading modal,
+            * so the overlay is no longer present to click on to close
+            * the staff grading modal.  Since leanModal uses a fade out
+            * time of 200ms to hide the overlay, our work around is to
+            * wait 225ms and then just "click" the 'Grade Submissions'
+            * button again.  It would also probably be pretty
+            * straightforward to submit a patch to leanModal so that it
+            * would work properly with nested modals.
+            *
+            * See: https://github.com/mitodl/edx-sga/issues/13
+            */
+            setTimeout(function () {
+            $('#grade-submissions-button').click();
+            gradeFormError('');
+            gradePopUpIsOpen = false
+            }, 225);
+        });
+        gradePopUpIsOpen = true;
+        }
+
+        function renderStaffGrading(data) {
+            console.log(data)
+            if (data.hasOwnProperty('error')) {
+              gradeFormError(data['error']);
+            } else {
+              gradeFormError('');
+              $('.grade-modal').hide();
+            }
+      
+            if (data.display_name !== '') {
+              $('.sga-block .display_name').html(data.display_name);
+            }
+      
+            // Add download urls to template context
+            data.downloadUrl = staffDownloadUrl;
+            
+            data.map(function (submission) {
+                console.log($(element).find('#grade-info #grade-' + submission.module_id))
+                if(submission.Grade != null) {
+                    $(element).find('#grade-info #grade-' + submission.module_id).text((submission.Grade) + "/" + (submission.max_points));
+                    $(element).find('#grade-info #comment-' + submission.module_id).text(submission.comments);
+                }else {
+                    $(element).find('#grade-info #grade-' + submission.module_id).text("");
+                    $(element).find('#grade-info #comment-' + submission.module_id).text("");
+                }
+                
+                
+              });
+            // Set up grade entry modal
+            $(element).find('.enter-grade-button')
+              .leanModal({ closeButton: '#enter-grade-cancel' })
+              .on('click', handleGradeEntry);
+
+            // $.tablesorter.addParser({
+            //   id: 'alphanum',
+            //   is: function (s) {
+            //     return false;
+            //   },
+            //   format: function (s) {
+            //     var str = s.replace(/(\d{1,2})/g, function (a) {
+            //       return pad(a);
+            //     });
+      
+            //     return str;
+            //   },
+            //   type: 'text'
+            // });
+      
+            // $.tablesorter.addParser({
+            //   id: 'yesno',
+            //   is: function (s) {
+            //     return false;
+            //   },
+            //   format: function (s) {
+            //     return s.toLowerCase().trim() === gettext('yes') ? 1 : 0;
+            //   },
+            //   type: 'text'
+            // });
+      
+            // function pad(num) {
+            //   var s = '00000' + num;
+            //   return s.substr(s.length - 5);
+            // }
+            // $("#submissions").tablesorter({
+            //   headers: {
+            //     2: { sorter: "alphanum" },
+            //     3: { sorter: "alphanum" },
+            //     4: { sorter: "yesno" },
+            //     7: { sorter: "alphanum" }
+            //   }
+            // });
+            // $("#submissions").trigger("update");
+            // var sorting = [[4, 1], [1, 0]];
+            // $("#submissions").trigger("sorton", [sorting]);
+          }
 
 
 }

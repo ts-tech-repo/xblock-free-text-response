@@ -4,6 +4,7 @@ Handle view logic for the XBlock
 from six import text_type
 from xblock.core import XBlock
 from xblock.validation import ValidationMessage
+from xblock.scorable import ScorableXBlockMixin, Score
 try:
     from xblock.utils.resources import ResourceLoader
     from xblock.utils.studio_editable import StudioEditableXBlockMixin
@@ -14,21 +15,31 @@ except ModuleNotFoundError:
 
 from .mixins.dates import EnforceDueDates
 from .mixins.fragment import XBlockFragmentBuilderMixin
+from edx_sga.showanswer import ShowAnswerXBlockMixin
 from .mixins.i18n import I18nXBlockMixin
 from .models import Credit
 from .models import MAX_RESPONSES
 from lms.djangoapps.courseware.models import StudentModule
+from common.djangoapps.student.models import anonymous_id_for_user
+from webob.response import Response
 
 import logging
+import json
+from submissions import api as submissions_api
+from lms.djangoapps.grades.api import signals as grades_signals
 
 log = logging.getLogger(__name__)
 
 #  pylint: disable=no-member
+@XBlock.needs('replace_urls')
+@XBlock.needs('user')
+@XBlock.needs("i18n")
 class FreeTextResponseViewMixin(
         I18nXBlockMixin,
         EnforceDueDates,
         XBlockFragmentBuilderMixin,
         StudioEditableXBlockMixin,
+        ShowAnswerXBlockMixin, XBlock, ScorableXBlockMixin,
 ):
     """
     Handle view logic for FreeTextResponse XBlock instances
@@ -60,7 +71,7 @@ class FreeTextResponseViewMixin(
             'submitted_message': '',
             'loggedin_user' : self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id),
             'block_id' : self.scope_ids.def_id,
-            'users_submissions' : StudentModule.get_state_by_params(self.scope_ids.usage_id.context_key, [self.scope_ids.usage_id])
+            'users_submissions' : self.staff_grading_data()
         })
         return context
 
@@ -237,6 +248,13 @@ class FreeTextResponseViewMixin(
             'display_other_responses': self.display_other_student_responses,
             'visibility_class': self._get_indicator_visibility_class(),
         }
+        student_item_dict = {
+                "student_id": self.xmodule_runtime.anonymous_student_id,
+                "course_id": str(self.course_id),
+                "item_id": str(self.scope_ids.usage_id),
+                "item_type": "freetextresponse",
+            }
+        submissions_api.create_submission(student_item_dict, self.student_answer)
         return result
 
     @XBlock.json_handler
@@ -348,6 +366,132 @@ class FreeTextResponseViewMixin(
                 'Submission Received Message cannot be blank'
             )
             validation.add(msg)
+    
+    @XBlock.handler
+    def enter_grade(self, request, suffix=""):
+        # pylint: disable=unused-argument
+        """
+        Persist a score for a student given by staff.
+        """
+        require(self.is_course_staff())
+        score = request.params.get("grade", None)
+        module = self.get_student_module(request.params["module_id"])
+        if not score:
+            return Response(
+                json_body=self.validate_score_message(
+                    module.course_id, module.student.username
+                )
+            )
+
+        state = json.loads(module.state)
+        try:
+            score = int(score)
+        except ValueError:
+            return Response(
+                json_body=self.validate_score_message(
+                    module.course_id, module.student.username
+                )
+            )
+
+        state["staff_score"] = score
+        state["score"] = score
+        state["comment"] = request.params.get("comment", "")
+        module.state = json.dumps(state)
+        module.save()
+        log.info(self.scope_ids)
+        submissions_api.set_score(request.params["submission_id"], score, self.max_score())
+        log.info(
+            "enter_grade for course:%s module:%s student:%s",
+            module.course_id,
+            module.module_state_key,
+            module.student.username,
+        )
+
+        return Response(json_body=self.staff_grading_data())
+    
+    @XBlock.handler
+    def remove_grade(self, request, suffix=""):
+        # pylint: disable=unused-argument
+        """
+        Reset a students score request by staff.
+        """
+        require(self.is_course_staff())
+        student_id = request.params["student_id"]
+        module = self.get_student_module(request.params["module_id"])
+        submissions_api.reset_score(student_id, str(self.course_id), str(self.scope_ids.usage_id))
+        state = json.loads(module.state)
+        state["staff_score"] = None
+        state["comment"] = ""
+        module.state = json.dumps(state)
+        module.save()
+        log.info(
+            "remove_grade for course:%s module:%s student:%s",
+            module.course_id,
+            module.module_state_key,
+            module.student.username,
+        )
+        return Response(json_body=self.staff_grading_data())
+    
+    def staff_grading_data(self):
+        submissions = StudentModule.get_state_by_params(self.scope_ids.usage_id.context_key, [self.scope_ids.usage_id])
+        users_submissions = []
+
+        for submission in submissions:
+            users_submissions.append({"username" : submission.student.username, "firstname" : submission.student.first_name, "Grade" : self.get_score(submission.student.id), "comments" : json.loads(submission.state).get("comment", ""), "module_id" : submission.id, "max_points" : self.weight, "student_answer" : json.loads(submission.state).get("student_answer", ""), "submission_id" : self.get_submission(submission.student) })
+        return users_submissions
+    
+    def is_course_staff(self):
+        return self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id).is_staff
+    
+    def get_student_module(self, module_id):
+        return StudentModule.objects.get(pk=module_id)
+    
+    def get_submission(self, student=None):
+
+        submissions = submissions_api.get_submissions(
+            {
+                "student_id": anonymous_id_for_user(student, self.course_id),
+                "course_id": str(self.course_id),
+                "item_id": str(self.scope_ids.usage_id),
+                "item_type": "freetextresponse",
+            }
+        )
+        if submissions:
+            # If I understand docs correctly, most recent submission should
+            # be first
+            return submissions[0]["uuid"]
+
+        return None
+    
+    def max_score(self):
+        return self.weight
+
+    def set_score(self, score):
+        self.learner_score = score.raw_earned
+        self.save()
+    
+    def calculate_score(self):
+        return Score(self.learner_score, self.max_raw_score())
+
+    def publish_grade(self):
+        self._publish_grade(self.calculate_score())
+    
+    def get_score(self, student_id=None):
+        score = submissions_api.get_score({
+                "student_id": self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id).id,
+                "course_id": str(self.course_id),
+                "item_id": str(self.scope_ids.usage_id),
+                "item_type": "freetextresponse",
+            })
+        if score:
+            return score["points_earned"]
+
+        return None
+
+
+def require(assertion):
+    if not assertion:
+        raise PermissionDenied
 
 
 def _is_at_least_one_phrase_present(phrases, answer):
