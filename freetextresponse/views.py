@@ -54,6 +54,7 @@ class FreeTextResponseViewMixin(
         """
         context = context or {}
         context = dict(context)
+        self.student_id = self.xmodule_runtime.anonymous_student_id
         context.update({
             'display_name': self.display_name,
             'indicator_class': self._get_indicator_class(),
@@ -61,6 +62,7 @@ class FreeTextResponseViewMixin(
             'problem_progress': self._get_problem_progress(),
             'prompt': self.prompt,
             'student_answer': self.student_answer,
+            'is_graded': self.get_score(self.xmodule_runtime.get_real_user(self.student_id)),
             'is_past_due': self.is_past_due(),
             'used_attempts_feedback': self._get_used_attempts_feedback(),
             'visibility_class': self._get_indicator_visibility_class(),
@@ -69,9 +71,10 @@ class FreeTextResponseViewMixin(
             'other_responses': self.get_other_answers(),
             'user_alert': '',
             'submitted_message': '',
-            'loggedin_user' : self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id),
+            'loggedin_user' : self.xmodule_runtime.get_real_user(self.student_id),
             'block_id' : self.scope_ids.def_id,
-            'users_submissions' : self.staff_grading_data()
+            'users_submissions' : self.staff_grading_data(),
+            'student_submission' : self.get_student_submission(),
         })
         return context
 
@@ -137,6 +140,7 @@ class FreeTextResponseViewMixin(
         Returns a statement of progress for the XBlock, which depends
         on the user's current score
         """
+        self.score = 0 if self.score is None else self.score
         if self.weight == 0:
             result = ''
         elif self.score == 0.0:
@@ -145,13 +149,13 @@ class FreeTextResponseViewMixin(
                                  f'{weight} points possible', weight)
             result = f"({temp})"
         else:
-            scaled_score = self.score * self.weight
-            # No trailing zero and no scientific notation
-            score_string = f'{scaled_score:.15f}'.rstrip('0').rstrip('.')
-            weight = self.weight
-            temp = self.ngettext(f'{score_string}/{weight} point',
-                                 f'{score_string}/{weight} points', weight)
-            result = f"({temp})"
+            # scaled_score = self.score * self.weight
+            # # No trailing zero and no scientific notation
+            # score_string = f'{scaled_score:.15f}'.rstrip('0').rstrip('.')
+            # weight = self.weight
+            # temp = self.ngettext(f'{score_string}/{weight} point',
+            #                      f'{score_string}/{weight} points', weight)
+            result = "{} / {}".format(self.score, self.weight)
         return result
 
     def _get_used_attempts_feedback(self):
@@ -230,7 +234,7 @@ class FreeTextResponseViewMixin(
             # Counting the attempts and publishing a score
             # even if word count is invalid.
             self.count_attempts += 1
-            self._compute_score()
+            # self._compute_score()
             display_other_responses = self.display_other_student_responses
             if display_other_responses and data.get('can_record_response'):
                 self.store_student_response()
@@ -420,8 +424,11 @@ class FreeTextResponseViewMixin(
         module = self.get_student_module(request.params["module_id"])
         submissions_api.reset_score(student_id, str(self.course_id), str(self.scope_ids.usage_id))
         state = json.loads(module.state)
-        state["staff_score"] = ""
-        state["comment"] = ""
+        state["staff_score"] = None
+        state["comment"] = None
+        module.grade = None
+        module.max_grade = None
+        # state["score"] = None
         module.state = json.dumps(state)
         module.save()
         log.info(
@@ -437,7 +444,8 @@ class FreeTextResponseViewMixin(
         users_submissions = []
 
         for submission in submissions:
-            users_submissions.append({"username" : submission.student.username, "firstname" : submission.student.first_name, "score" : self.get_score(submission.student), "comments" : json.loads(submission.state).get("comment", ""), "module_id" : submission.id, "max_points" : self.weight, "student_answer" : json.loads(submission.state).get("student_answer", ""), "submission_id" : self.get_submission(submission.student), "student_id" : anonymous_id_for_user(submission.student, self.course_id) })
+            student_submission = self.get_submission(submission.student)
+            users_submissions.append({"username" : submission.student.username, "firstname" : submission.student.first_name, "score" : self.get_score(submission.student), "comments" : json.loads(submission.state).get("comment", ""), "module_id" : submission.id, "max_points" : self.weight, "student_answer" : json.loads(submission.state).get("student_answer", ""), "submission_id" : student_submission.get("uuid", None) if student_submission else None, "student_id" : anonymous_id_for_user(submission.student, self.course_id) })
         return {"submissions" : users_submissions}
     
     def is_course_staff(self):
@@ -459,16 +467,18 @@ class FreeTextResponseViewMixin(
         if submissions:
             # If I understand docs correctly, most recent submission should
             # be first
-            return submissions[0]["uuid"]
+            return submissions[0]
 
         return None
     
-    def max_score(self):
-        return self.weight
+    def get_student_submission(self):
 
-    def set_score(self, score):
-        self.learner_score = score.raw_earned
-        self.save()
+        student_submission = StudentModule.get_state_by_params(self.scope_ids.usage_id.context_key, [self.scope_ids.usage_id], self.xmodule_runtime.get_real_user(self.student_id).id)
+
+        if student_submission:
+            return json.loads(student_submission[0].state)
+
+        return {}
     
     def calculate_score(self):
         return Score(self.learner_score, self.max_raw_score())
@@ -490,6 +500,18 @@ class FreeTextResponseViewMixin(
 
     def has_submitted_answer(self):
         return self.student_answer
+    
+    def validate_score_message(
+        self, course_id, username
+    ):  # lint-amnesty, pylint: disable=missing-function-docstring
+        # pylint: disable=no-member
+        log.error(
+            "enter_grade: invalid grade submitted for course:%s module:%s student:%s",
+            course_id,
+            self.location,
+            username,
+        )
+        return {"error": "Please enter valid grade"}
 
 
 def require(assertion):

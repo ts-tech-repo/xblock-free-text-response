@@ -230,7 +230,7 @@ function FreeTextResponseView(runtime, element) {
         var row = $(this).parents("tr");
         console.log(row.find("td:eq(3)").text())
         var form = $(element).find("#enter-grade-form");
-        $(element).find('#student-name').text(row.find("td:eq(0)").text());
+        $(element).find('#student-name').text(`${row.find("td:eq(1)").text()} (${row.find("td:eq(0)").text()})`);
         form.find('#module_id-input').val(row.find("td:eq(5)").text());
         form.find('#grade-input').val(row.find("td:eq(3)").text().split("/")[0]);
         form.find('#comment-input').text(row.find("td:eq(4)").text());

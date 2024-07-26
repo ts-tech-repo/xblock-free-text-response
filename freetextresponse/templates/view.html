@@ -1,14 +1,20 @@
 {% load i18n %}
 <div class="freetextresponse xmodule_display xmodule_CapaModule problem">
     <h3 class="problem-header">{{ display_name }}</h3>
-    <div class="problem-progress">{{ problem_progress }}</div>
+    <div class="problem-progress" style="display: none;">{{ problem_progress }}</div>
     <p>{{ prompt|safe }}</p>
     <div class="word-count-message">{{ word_count_message }}</div>
     <div class="capa_inputtype textline">
+      {% if not is_graded %}
         <div class="user_input {{ indicator_class }}">
             <textarea class="student_answer" rows="20">{{ student_answer }}</textarea>
             <span class="status {{ visibility_class }}" aria-describedby="student_answer"></span>
         </div>
+        {%else%}
+          <p>Your answer is {{student_answer}}</p>
+          <p>Grade scored is {{ problem_progress }}</p>
+          <p>Instructor comments are {{student_submission.comment}} </p>
+        {%endif%}
     </div>
     {% if display_other_responses %}
         <input class="messageCheckbox" type="checkbox" checked>
