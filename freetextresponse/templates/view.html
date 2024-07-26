@@ -79,7 +79,7 @@
       </thead>
       <tbody>
 
-            {% for submission in users_submissions %}
+            {% for submission in users_submissions.submissions %}
                 <tr>
                     <td>{{submission.username}}</td>
                     <td>{{submission.firstname}}</td>
@@ -93,7 +93,7 @@
                     {%endif%}
                     
                     <td style="display: none;">{{submission.module_id}}</td>
-                    <td style="display: none;">{{loggedin_user.id}}</td>
+                    <td style="display: none;">{{submission.student_id}}</td>
                     <td><a class="enter-grade-button button" href="#enter-grade-{{ block_id }}">Enter Grade</a></td>
                     <td style="display: none;">{{submission.submission_id}}</td>
                 </tr>

@@ -420,7 +420,7 @@ class FreeTextResponseViewMixin(
         module = self.get_student_module(request.params["module_id"])
         submissions_api.reset_score(student_id, str(self.course_id), str(self.scope_ids.usage_id))
         state = json.loads(module.state)
-        state["staff_score"] = None
+        state["staff_score"] = ""
         state["comment"] = ""
         module.state = json.dumps(state)
         module.save()
@@ -437,8 +437,8 @@ class FreeTextResponseViewMixin(
         users_submissions = []
 
         for submission in submissions:
-            users_submissions.append({"username" : submission.student.username, "firstname" : submission.student.first_name, "Grade" : self.get_score(submission.student.id), "comments" : json.loads(submission.state).get("comment", ""), "module_id" : submission.id, "max_points" : self.weight, "student_answer" : json.loads(submission.state).get("student_answer", ""), "submission_id" : self.get_submission(submission.student) })
-        return users_submissions
+            users_submissions.append({"username" : submission.student.username, "firstname" : submission.student.first_name, "Grade" : self.get_score(submission.student), "comments" : json.loads(submission.state).get("comment", ""), "module_id" : submission.id, "max_points" : self.weight, "student_answer" : json.loads(submission.state).get("student_answer", ""), "submission_id" : self.get_submission(submission.student), "student_id" : anonymous_id_for_user(submission.student, self.course_id) })
+        return {"submissions" : users_submissions, "max_score" : self.max_score(), "display_name" : self.display_name}
     
     def is_course_staff(self):
         return self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id).is_staff
@@ -476,9 +476,9 @@ class FreeTextResponseViewMixin(
     def publish_grade(self):
         self._publish_grade(self.calculate_score())
     
-    def get_score(self, student_id=None):
+    def get_score(self, student=None):
         score = submissions_api.get_score({
-                "student_id": self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id).id,
+                "student_id": anonymous_id_for_user(student, self.course_id),
                 "course_id": str(self.course_id),
                 "item_id": str(self.scope_ids.usage_id),
                 "item_type": "freetextresponse",
@@ -487,6 +487,9 @@ class FreeTextResponseViewMixin(
             return score["points_earned"]
 
         return None
+
+    def has_submitted_answer(self):
+        return self.student_answer
 
 
 def require(assertion):
