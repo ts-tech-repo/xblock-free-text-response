@@ -58,7 +58,7 @@
 		<a class="instructor-info-action" id="grade-submissions-button" href="#grade-{{block_id}}">Grade Submissions</a>
   	</div>
 {%endif%}
-<section aria-hidden="true" class="modal staff-modal grade-submission" id="grade-{{block_id}}" style="height: auto; position: fixed; opacity: 1; z-index: 11000; left: 30%; margin-left: -402px; top: 100px; max-height: 600px;" tabindex="-1">
+<section aria-hidden="true" class="modal staff-modal grade-submission" id="grade-{{block_id}}" style="height: auto; position: fixed; opacity: 1; z-index: 11000; left: 30%; margin-left: -402px; top: 22px; max-height: 600px;" tabindex="-1">
     <div class="inner-wrapper" style="color: black; overflow: auto;">
       <header><h2><span class="display_name">Free Text Response</span></h2></header>
       <br>
@@ -88,7 +88,7 @@
                 <tr>
                     <td>{{submission.username}}</td>
                     <td>{{submission.firstname}}</td>
-                    <td>{{submission.student_answer}}</td>
+                    <td><span style="display: block; width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;border: none;">{{submission.student_answer}}</span></td>
                     {% if submission.score %}
                       <td id="grade-{{submission.module_id}}">{{submission.score}}/{{submission.max_points}}</td>
                       <td id="comment-{{submission.module_id}}">{{submission.comments}}</td>
@@ -99,15 +99,15 @@
                     
                     <td style="display: none;">{{submission.module_id}}</td>
                     <td style="display: none;">{{submission.student_id}}</td>
-                    <td><a class="enter-grade-button button" href="#enter-grade-{{ block_id }}">Enter Grade</a></td>
+                    <td><a class="enter-grade-button button" href="#enter-grade-{{ block_id }}">Edit Grade</a></td>
                     <td style="display: none;">{{submission.submission_id}}</td>
                 </tr>
             {%endfor%}
 
 	</tbody>
     </table>
-    <section aria-hidden="true" class="modal grade-modal" id="enter-grade-{{ block_id }}" tabindex="-1">
-        <div class="inner-wrapper" style="color: black">
+    <section aria-hidden="true" class="modal grade-modal" id="enter-grade-{{ block_id }}" tabindex="-1" >
+        <div class="inner-wrapper" style="color: black;height: 324px;overflow-y: scroll;">
           <header><h2>
             {% trans "Enter Grade" %}
           </h2></header>
@@ -116,10 +116,11 @@
             <form id="enter-grade-form">
               <input id="module_id-input" type="hidden" name="module_id"/>
               <input id="submission_id-input" type="hidden" name="submission_id"/>
-              <div>{% blocktrans with student_name="<span id='student-name'/>" %}Grade for {{student_name}}{% endblocktrans %}</div>
-              <div>{% trans "Grade:" %} <input id="grade-input" name="grade"/>
+              <div>{% blocktrans with student_name="<span id='student-name'/>" %}Grade for {{student_name}}{% endblocktrans %}</div><br>
+              <p><b>{% trans "Student Answer:" %} </b><span id="student_answer"></span></p>
+              <div><b>{% trans "Grade:" %}</b> <input id="grade-input" name="grade"/>
                 <span class="error"></span></div>
-              <div>{% trans "Comment:" %} <textarea id="comment-input" name="comment" rows="4"></textarea></div>
+              <div><b>{% trans "Comment:" %}</b> <textarea id="comment-input" name="comment" rows="4"></textarea></div>
               <div>
                 <button type="submit">{% trans "Submit" %}</button>
                 <button type="button" id="enter-grade-cancel">

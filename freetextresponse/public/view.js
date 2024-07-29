@@ -48,7 +48,7 @@ function FreeTextResponseView(runtime, element) {
         // eslint-disable-next-line prefer-rest-params, no-console
         console.log('POLYFILL runtime.notify', arguments);
     };
-
+    $("#submissions").tablesorter();
     /**
      * Update CSS classes
      * @param {string} newClass - a CSS class name to be used
@@ -235,6 +235,8 @@ function FreeTextResponseView(runtime, element) {
         form.find('#grade-input').val(row.find("td:eq(3)").text().split("/")[0]);
         form.find('#comment-input').text(row.find("td:eq(4)").text());
         form.find('#comment-input').val(row.find("td:eq(4)").text());
+        console.log(row.find("td:eq(2)").text())
+        form.find("#student_answer").text(row.find("td:eq(2)").text())
         form.find('#submission_id-input').val(row.find("td:eq(8)").text());
         
         form.find('#remove-grade').prop('disabled', false);
@@ -318,19 +320,25 @@ function FreeTextResponseView(runtime, element) {
       
             // Add download urls to template context
             data.downloadUrl = staffDownloadUrl;
+            if("error" in data) {
+                $(element).find('.ccx-enter-grade-spinner').hide();
+            }
+            else{
+                data["submissions"].map(function (submission) {
+                    console.log($(element).find('#grade-info #grade-' + submission.module_id))
+                    if(submission.score != null) {
+                        $(element).find('#grade-info #grade-' + submission.module_id).text((submission.score) + "/" + (submission.max_points));
+                        $(element).find('#grade-info #comment-' + submission.module_id).text(submission.comments);
+                    }else {
+                        $(element).find('#grade-info #grade-' + submission.module_id).text("");
+                        $(element).find('#grade-info #comment-' + submission.module_id).text("");
+                    }
+                    
+                    
+                  });
+
+            }
             
-            data["submissions"].map(function (submission) {
-                console.log($(element).find('#grade-info #grade-' + submission.module_id))
-                if(submission.score != null) {
-                    $(element).find('#grade-info #grade-' + submission.module_id).text((submission.score) + "/" + (submission.max_points));
-                    $(element).find('#grade-info #comment-' + submission.module_id).text(submission.comments);
-                }else {
-                    $(element).find('#grade-info #grade-' + submission.module_id).text("");
-                    $(element).find('#grade-info #comment-' + submission.module_id).text("");
-                }
-                
-                
-              });
             // Set up grade entry modal
             $(element).find('.enter-grade-button')
               .leanModal({ closeButton: '#enter-grade-cancel' })
@@ -366,17 +374,7 @@ function FreeTextResponseView(runtime, element) {
             //   var s = '00000' + num;
             //   return s.substr(s.length - 5);
             // }
-            // $("#submissions").tablesorter({
-            //   headers: {
-            //     2: { sorter: "alphanum" },
-            //     3: { sorter: "alphanum" },
-            //     4: { sorter: "yesno" },
-            //     7: { sorter: "alphanum" }
-            //   }
-            // });
-            // $("#submissions").trigger("update");
-            // var sorting = [[4, 1], [1, 0]];
-            // $("#submissions").trigger("sorton", [sorting]);
+            $("#submissions").tablesorter();
           }
 
 

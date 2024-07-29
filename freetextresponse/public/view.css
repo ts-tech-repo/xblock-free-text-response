@@ -52,6 +52,10 @@
   font-weight: 600;
 }
 
+.freetextresponse  .save {
+  width: 84px;
+
+}
 .freetextresponse .action .check {
   height: 40px;
   vertical-align: middle;
@@ -160,4 +164,42 @@
 
 .freetextresponse div:empty {
   display: none;
+}
+
+table.gridtable td {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #666666;
+  background-color: #ffffff;
+}
+
+table.gridtable {
+  font-family: verdana, arial, sans-serif;
+  font-size: 11px;
+  color: #333333;
+  border-width: 1px;
+  border-color: #666666;
+  border-collapse: collapse;
+}
+
+table.gridtable th {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #666666;
+  background-color: #dedede;
+}
+
+table.tablesorter thead tr .header {
+  cursor: pointer;
+}
+
+.modal, .leanModal_box, .entitlement-unenrollment-modal {
+  width: 693px !important;
+  top: 45px !important;
+}
+
+.error {
+  color: red;
 }
