@@ -61,6 +61,7 @@ class XBlockFragmentBuilderMixin(object):
         fragment.add_css(pkg_resources.resource_string(__name__, "../public/view.css").decode("utf8"))
         fragment.add_javascript(pkg_resources.resource_string(__name__, "../public/view.js").decode("utf8"))
         fragment.add_javascript(pkg_resources.resource_string(__name__, "../public/jquery.tablesorter.min.js").decode("utf8"))
+        fragment.add_javascript(pkg_resources.resource_string(__name__, "../public/jquery.table2excel.min.js").decode("utf8"))
         fragment.initialize_js("FreeTextResponseView")
         return fragment
 

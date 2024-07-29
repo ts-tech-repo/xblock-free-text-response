@@ -379,3 +379,46 @@ function FreeTextResponseView(runtime, element) {
 
 
 }
+
+function exportTableToExcel(filename){
+    let downloadLink;
+    $("#submissions").table2excel({
+        //Exclude CSS class specific to this plugin
+        exclude: ".hide_row",
+        name: "Free Text Responses",
+        filename: filename
+    });
+
+    // const dataType = 'application/vnd.ms-excel';
+    
+    // var $clonedTable = $("#submissions").clone();
+    // $clonedTable.find('[style*="display: none"]').remove();
+    // $clonedTable.find(".action").remove()
+
+    // tableHTML = $clonedTable.html().replace(/ /g, '%20');;
+
+    // // Specify file name
+    // // filename = 'excel_data.xls';
+    
+    // // Create download link element
+    // downloadLink = document.createElement("a");
+    
+    // document.body.appendChild(downloadLink);
+    
+    // if(navigator.msSaveOrOpenBlob){
+    //     var blob = new Blob(['\ufeff', [tableHTML]], {
+    //         type: dataType
+    //     });
+    //     navigator.msSaveOrOpenBlob( blob, filename);
+    // }else{
+    //     // Create a link to the file
+    //     downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    
+    //     // Setting the file name
+    //     downloadLink.download = filename;
+        
+    //     //triggering the function
+    //     downloadLink.click();
+    // }
+  }
+  

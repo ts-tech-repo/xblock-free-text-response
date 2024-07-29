@@ -62,9 +62,9 @@
     <div class="inner-wrapper" style="color: black; overflow: auto;">
       <header><h2><span class="display_name">Free Text Response</span></h2></header>
       <br>
-      <!-- <div>
-        <a class="instructor-info-action button btn-download-all" href="#" id="download-init-button">Download All Submissions</a>
-      </div> -->
+      <div>
+        <a class="instructor-info-action button btn-download-all"  onclick="exportTableToExcel('{{block_id}}');" id="download-init-button">Download All Submissions</a>
+      </div>
       <p class="task-message"></p>
       <div id="grade-info" style="display: block;">
 {%  if loggedin_user.is_staff %}
@@ -77,10 +77,10 @@
         <th class="header headerSortDown">Student Answer <i class="icon fa fa-sort"></i></th>
         <th class="header">Grade <i class="icon fa fa-sort"></i></th>
         <th class="header">Instructor's comments <i class="icon fa fa-sort"></i></th>
-        <th style="display: none;">Module ID</th>
-        <th style="display: none;">User ID</th>
-        <th class="header" colspan="2">Actions</th>
-        <th class="header" style="display: none;">Submission ID</th>
+        <th style="display: none;" class="hide_row">Module ID</th>
+        <th style="display: none;" class="hide_row">User ID</th>
+        <th class="header hide_row" colspan="2" >Actions</th>
+        <th class="header hide_row" style="display: none;" >Submission ID</th>
       </tr>
       </thead>
       <tbody>
@@ -97,10 +97,10 @@
                       <td id="comment-{{submission.module_id}}"></td>
                     {%endif%}
                     
-                    <td style="display: none;">{{submission.module_id}}</td>
-                    <td style="display: none;">{{submission.student_id}}</td>
-                    <td><a class="enter-grade-button button" href="#enter-grade-{{ block_id }}">Edit Grade</a></td>
-                    <td style="display: none;">{{submission.submission_id}}</td>
+                    <td style="display: none;" class="hide_row">{{submission.module_id}}</td>
+                    <td style="display: none;" class="hide_row">{{submission.student_id}}</td>
+                    <td><a class="enter-grade-button button hide_row" href="#enter-grade-{{ block_id }}">Edit Grade</a></td>
+                    <td style="display: none;" class="hide_row">{{submission.submission_id}}</td>
                 </tr>
             {%endfor%}
 
