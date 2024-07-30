@@ -62,7 +62,7 @@ class FreeTextResponseViewMixin(
             'problem_progress': self._get_problem_progress(),
             'prompt': self.prompt,
             'student_answer': self.student_answer,
-            'is_graded': self.get_score(self.xmodule_runtime.get_real_user(self.student_id)),
+            'is_graded': self.get_score(self.xmodule_runtime.get_real_user(self.student_id)) if self.student_id != "student" else False,
             'is_past_due': self.is_past_due(),
             'used_attempts_feedback': self._get_used_attempts_feedback(),
             'visibility_class': self._get_indicator_visibility_class(),
@@ -71,10 +71,10 @@ class FreeTextResponseViewMixin(
             'other_responses': self.get_other_answers(),
             'user_alert': '',
             'submitted_message': '',
-            'loggedin_user' : self.xmodule_runtime.get_real_user(self.student_id),
+            'loggedin_user' : self.xmodule_runtime.get_real_user(self.student_id) if self.student_id  != "student" else False,
             'block_id' : self.scope_ids.def_id,
             'users_submissions' : self.staff_grading_data(),
-            'student_submission' : self.get_student_submission(),
+            'student_submission' : self.get_student_submission()  if self.student_id  != "student" else {},
         })
         return context
 
@@ -253,7 +253,7 @@ class FreeTextResponseViewMixin(
             'visibility_class': self._get_indicator_visibility_class(),
         }
         student_item_dict = {
-                "student_id": self.xmodule_runtime.anonymous_student_id,
+                "student_id": self.student_id,
                 "course_id": str(self.course_id),
                 "item_id": str(self.scope_ids.usage_id),
                 "item_type": "freetextresponse",
@@ -449,7 +449,7 @@ class FreeTextResponseViewMixin(
         return {"submissions" : users_submissions}
     
     def is_course_staff(self):
-        return self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id).is_staff
+        return self.xmodule_runtime.get_real_user(self.student_id).is_staff
     
     def get_student_module(self, module_id):
         return StudentModule.objects.get(pk=module_id)

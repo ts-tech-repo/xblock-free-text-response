@@ -172,6 +172,8 @@ class FreeTextResponseModelMixin(object):
     )
     has_score = True
     show_in_read_only_mode = True
+    student_id = ""
+    icon_class = "problem"
 
     def store_student_response(self):
         """
