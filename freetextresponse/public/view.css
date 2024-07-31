@@ -195,7 +195,7 @@ table.tablesorter thead tr .header {
   cursor: pointer;
 }
 
-.modal, .leanModal_box, .entitlement-unenrollment-modal {
+.grade-modal {
   width: 693px !important;
   top: 45px !important;
 }

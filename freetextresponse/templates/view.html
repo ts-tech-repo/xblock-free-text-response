@@ -13,7 +13,9 @@
         {%else%}
           <p>Your answer is {{student_answer}}</p>
           <p>Grade scored is {{ problem_progress }}</p>
-          <p>Instructor comments are {{student_submission.comment}} </p>
+          {% if student_submission.comment %}
+            <p>Instructor comments are {{student_submission.comment}} </p>
+          {%endif%}
         {%endif%}
     </div>
     {% if display_other_responses %}
