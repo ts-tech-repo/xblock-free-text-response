@@ -253,7 +253,7 @@ class FreeTextResponseViewMixin(
             'visibility_class': self._get_indicator_visibility_class(),
         }
         student_item_dict = {
-                "student_id": self.student_id,
+                "student_id": self.xmodule_runtime.anonymous_student_id,
                 "course_id": str(self.course_id),
                 "item_id": str(self.scope_ids.usage_id),
                 "item_type": "freetextresponse",
@@ -388,14 +388,14 @@ class FreeTextResponseViewMixin(
             )
 
         state = json.loads(module.state)
-        try:
-            score = int(score)
-        except ValueError:
-            return Response(
-                json_body=self.validate_score_message(
-                    module.course_id, module.student.username
-                )
-            )
+        # try:
+        #     score = int(score)
+        # except ValueError:
+        #     return Response(
+        #         json_body=self.validate_score_message(
+        #             module.course_id, module.student.username
+        #         )
+        #     )
 
         state["staff_score"] = score
         state["score"] = score
@@ -449,7 +449,7 @@ class FreeTextResponseViewMixin(
         return {"submissions" : users_submissions}
     
     def is_course_staff(self):
-        return self.xmodule_runtime.get_real_user(self.student_id).is_staff
+        return self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id).is_staff
     
     def get_student_module(self, module_id):
         return StudentModule.objects.get(pk=module_id)
@@ -473,7 +473,7 @@ class FreeTextResponseViewMixin(
     
     def get_student_submission(self):
 
-        student_submission = StudentModule.get_state_by_params(self.scope_ids.usage_id.context_key, [self.scope_ids.usage_id], self.xmodule_runtime.get_real_user(self.student_id).id)
+        student_submission = StudentModule.get_state_by_params(self.scope_ids.usage_id.context_key, [self.scope_ids.usage_id], self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id).id)
 
         if student_submission:
             return json.loads(student_submission[0].state)
