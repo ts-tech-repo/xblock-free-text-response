@@ -263,6 +263,7 @@ function FreeTextResponseView(runtime, element) {
               form.find('.ccx-enter-grade-spinner').hide();
               });
           }
+          $("#submissions").tablesorter();
       });
       form.find('#remove-grade').off('click').on('click', function (event) {
           $(this).prop('disabled', true);
@@ -326,16 +327,15 @@ function FreeTextResponseView(runtime, element) {
                 });
 
           }
-          
-          // Set up grade entry modal
-          $(element).find('.enter-grade-button')
-            .leanModal({ closeButton: '#enter-grade-cancel' })
-            .on('click', handleGradeEntry);
           $("#submissions").tablesorter();
+          
         }
-
+        $(element).find('.enter-grade-button')
+        .leanModal({ closeButton: '#enter-grade-cancel' })
+        .on('click', handleGradeEntry);
 
 }
+
 
 function exportTableToExcel(filename){
   $("#submissions").table2excel({
