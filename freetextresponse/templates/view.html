@@ -26,12 +26,14 @@
     <div class="capa_alert submission-received">{{ submitted_message }}</div>
     <div class="action">
         {% if not is_past_due %}
+        {% if not is_graded %}
             <button class="check Submit {{ nodisplay_class }}" data-checking="{% trans "Checking..." %}" data-value={% trans "Submit" %}>
                 {% trans "Submit" %}
             </button>
             <button class="save {{ nodisplay_class }}" data-checking="{% trans "Checking..." %}" data-value={% trans "Save" %}>
                 {% trans "Save" %}
             </button>
+            {%endif%}
         {% endif %}
         <div class="used-attempts-feedback" aria-live="polite">{{ used_attempts_feedback }}</div>
     </div>

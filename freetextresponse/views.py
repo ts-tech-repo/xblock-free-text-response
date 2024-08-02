@@ -229,7 +229,7 @@ class FreeTextResponseViewMixin(
         """
         # Fails if the UI submit/save buttons were shut
         # down on the previous sumbisson
-        if self._can_submit():
+        if self._can_submit() and data['student_answer'] != "":
             self.student_answer = data['student_answer']
             # Counting the attempts and publishing a score
             # even if word count is invalid.
