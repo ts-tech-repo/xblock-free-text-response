@@ -272,7 +272,7 @@ function FreeTextResponseView(runtime, element) {
             row.find("td:eq(5)").text() + '&student_id=' +
             row.find("td:eq(6)").text();
             event.preventDefault();
-            if (row.find("td:eq(2)").text()) {
+            if (row.find("td:eq(3)").text()) {
             // if there is no grade then it is pointless to call api.
             $.get(url).success(renderStaffGrading).fail(function () {
                 $(this).prop('disabled', false);
@@ -280,6 +280,7 @@ function FreeTextResponseView(runtime, element) {
             });
             } else {
             gradeFormError('<br/>' + gettext('No grade to remove.'));
+		    form.find('.ccx-enter-grade-spinner').hide();
             }
             $("#submissions").tablesorter();
         });
@@ -346,4 +347,3 @@ function FreeTextResponseView(runtime, element) {
         columns: [0, 1, 2, 3, 4]
     });
   }
-  
