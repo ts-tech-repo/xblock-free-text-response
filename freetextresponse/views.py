@@ -1,8 +1,3 @@
-root@93dd3b796961:/openedx/edx-platform# vi ../venv/lib/python3.8/site-packages/freetextresponse/views.py 
-root@93dd3b796961:/openedx/edx-platform# vi ../venv/lib/python3.8/site-packages/freetextresponse/public/view.
-root@93dd3b796961:/openedx/edx-platform# vi ../venv/lib/python3.8/site-packages/freetextresponse/public/view.js 
-root@93dd3b796961:/openedx/edx-platform# vi ../venv/lib/python3.8/site-packages/freetextresponse/views.py 
-root@93dd3b796961:/openedx/edx-platform# cat ../venv/lib/python3.8/site-packages/freetextresponse/views.py 
 """
 Handle view logic for the XBlock
 """
