@@ -236,7 +236,7 @@ function FreeTextResponseView(runtime, element) {
         form.find('#comment-input').text(row.find("td:eq(4)").text());
         form.find('#comment-input').val(row.find("td:eq(4)").text());
         console.log(row.find("td:eq(2)").text())
-        form.find("#student_answer").text(row.find("td:eq(2)").text())
+        form.find("#student_answer").html(row.find("td:eq(2)").text())
         form.find('#submission_id-input').val(row.find("td:eq(8)").text());
         
         form.find('#remove-grade').prop('disabled', false);

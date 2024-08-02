@@ -7,14 +7,14 @@
     <div class="capa_inputtype textline">
       {% if not is_graded %}
         <div class="user_input {{ indicator_class }}">
-            <textarea class="student_answer" rows="20">{{ student_answer }}</textarea>
+            <textarea class="student_answer" rows="20">{{ student_answer | safe}}</textarea>
             <span class="status {{ visibility_class }}" aria-describedby="student_answer"></span>
         </div>
         {%else%}
-          <p>Your answer is {{student_answer}}</p>
-          <p>Grade scored is {{ problem_progress }}</p>
+          <p><b>Your answer is </b>{{student_answer | safe}}</p>
+          <p><b>Grade scored is </b>{{ problem_progress }}</p>
           {% if student_submission.comment %}
-            <p>Instructor comments are {{student_submission.comment}} </p>
+            <p><b>Instructor comments are </b>{{student_submission.comment}} </p>
           {%endif%}
         {%endif%}
     </div>

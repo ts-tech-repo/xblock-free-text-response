@@ -61,7 +61,7 @@ class FreeTextResponseViewMixin(
             'nodisplay_class': self._get_nodisplay_class(),
             'problem_progress': self._get_problem_progress(),
             'prompt': self.prompt,
-            'student_answer': self.student_answer,
+            'student_answer': self.student_answer.replace("\n", "<br>"),
             'is_graded': self.get_score(self.xmodule_runtime.get_real_user(self.student_id)) if self.student_id != "student" else False,
             'is_past_due': self.is_past_due(),
             'used_attempts_feedback': self._get_used_attempts_feedback(),
@@ -445,7 +445,7 @@ class FreeTextResponseViewMixin(
 
         for submission in submissions:
             student_submission = self.get_submission(submission.student)
-            users_submissions.append({"username" : submission.student.username, "firstname" : submission.student.first_name, "score" : self.get_score(submission.student), "comments" : json.loads(submission.state).get("comment", ""), "module_id" : submission.id, "max_points" : self.weight, "student_answer" : json.loads(submission.state).get("student_answer", ""), "submission_id" : student_submission.get("uuid", None) if student_submission else None, "student_id" : anonymous_id_for_user(submission.student, self.course_id) })
+            users_submissions.append({"username" : submission.student.username, "firstname" : submission.student.first_name, "score" : self.get_score(submission.student), "comments" : json.loads(submission.state).get("comment", ""), "module_id" : submission.id, "max_points" : self.weight, "student_answer" : json.loads(submission.state).get("student_answer", "").replace("\n", "<br>"), "submission_id" : student_submission.get("uuid", None) if student_submission else None, "student_id" : anonymous_id_for_user(submission.student, self.course_id) })
         return {"submissions" : users_submissions}
     
     def is_course_staff(self):
