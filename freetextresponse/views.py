@@ -54,6 +54,9 @@ class FreeTextResponseViewMixin(
         """
         context = context or {}
         context = dict(context)
+        is_course_staff = True
+        if user_service := self.runtime.service(self, 'user'):
+            is_course_staff = user_service.get_current_user().opt_attrs.get("edx-platform.user_is_staff")
         self.student_id = self.xmodule_runtime.anonymous_student_id
         context.update({
             'display_name': self.display_name,
@@ -72,6 +75,7 @@ class FreeTextResponseViewMixin(
             'user_alert': '',
             'submitted_message': '',
             'loggedin_user' : self.xmodule_runtime.get_real_user(self.student_id) if self.student_id  != "student" else False,
+            'is_course_staff' : is_course_staff,
             'block_id' : self.scope_ids.def_id,
             'users_submissions' : self.staff_grading_data(),
             'student_submission' : self.get_student_submission()  if self.student_id  != "student" else {},
@@ -449,6 +453,7 @@ class FreeTextResponseViewMixin(
         return {"submissions" : users_submissions}
     
     def is_course_staff(self):
+        log.info(self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id))
         return self.xmodule_runtime.get_real_user(self.xmodule_runtime.anonymous_student_id).is_staff
     
     def get_student_module(self, module_id):
