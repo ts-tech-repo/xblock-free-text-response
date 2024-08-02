@@ -269,7 +269,7 @@ class FreeTextResponseViewMixin(
         """
         # Fails if the UI submit/save buttons were shut
         # down on the previous sumbisson
-        if self.max_attempts == 0 or self.count_attempts < self.max_attempts:
+        if data['student_answer'] != "" and (self.max_attempts == 0 or self.count_attempts < self.max_attempts):
             self.student_answer = data['student_answer']
         result = {
             'status': 'success',
