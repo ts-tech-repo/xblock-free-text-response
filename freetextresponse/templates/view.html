@@ -84,6 +84,7 @@
         <th style="display: none;" class="hide_row">User ID</th>
         <th class="header hide_row" colspan="2" >Actions</th>
         <th class="header hide_row" style="display: none;" >Submission ID</th>
+        <th class="header" style="display: none;" >Student Answer</th>
       </tr>
       </thead>
       <tbody>
@@ -91,7 +92,7 @@
                 <tr>
                     <td>{{submission.username}}</td>
                     <td>{{submission.firstname}}</td>
-                    <td><span style="display: block; width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;border: none;">{{submission.student_answer}}</span></td>
+                    <td><span style="display: block; width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;border: none;">{{submission.student_answer }}</span></td>
                     {% if submission.score %}
                       <td id="grade-{{submission.module_id}}">{{submission.score}}/{{submission.max_points}}</td>
                       <td id="comment-{{submission.module_id}}">{{submission.comments}}</td>
@@ -104,6 +105,7 @@
                     <td style="display: none;" class="hide_row">{{submission.student_id}}</td>
                     <td><a class="enter-grade-button button hide_row" href="#enter-grade-{{ block_id }}">Edit Grade</a></td>
                     <td style="display: none;" class="hide_row">{{submission.submission_id}}</td>
+                    <td style="display: none;" >{{submission.raw_answer}}</td>
                 </tr>
             {%endfor%}
 

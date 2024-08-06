@@ -344,6 +344,6 @@ function FreeTextResponseView(runtime, element) {
         exclude: ".hide_row",
         name: "Free Text Responses",
         filename: filename,
-        columns: [0, 1, 2, 3, 4]
+        columns: [0, 1, 9, 3, 4]
     });
   }
