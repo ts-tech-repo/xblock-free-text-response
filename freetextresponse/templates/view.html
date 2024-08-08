@@ -11,7 +11,7 @@
             <span class="status {{ visibility_class }}" aria-describedby="student_answer"></span>
         </div>
         {%else%}
-          <p><b>Your answer is </b>{{student_answer | safe}}</p>
+          <p><b>Your answer is </b>{{formatted_student_answer | safe}}</p>
           <p><b>Grade scored is </b>{{ problem_progress }}</p>
           {% if student_submission.comment %}
             <p><b>Instructor comments are </b>{{student_submission.comment}} </p>
@@ -92,7 +92,7 @@
                 <tr>
                     <td>{{submission.username}}</td>
                     <td>{{submission.firstname}}</td>
-                    <td><span style="display: block; width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;border: none;">{{submission.student_answer }}</span></td>
+                    <td><span style="display: block; width: 100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;border: none;">{{submission.raw_answer}}</span></td>
                     {% if submission.score %}
                       <td id="grade-{{submission.module_id}}">{{submission.score}}/{{submission.max_points}}</td>
                       <td id="comment-{{submission.module_id}}">{{submission.comments}}</td>
