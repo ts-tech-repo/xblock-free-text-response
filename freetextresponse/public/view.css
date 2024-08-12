@@ -53,13 +53,14 @@
 }
 
 .freetextresponse  .save {
-  width: auto;
+  width: 108px;
 
 }
 .freetextresponse .action .check {
   height: 40px;
   vertical-align: middle;
   font-weight: 600;
+  width: 108px;
 }
 
 .freetextresponse .action .used-attempts-feedback {
